@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.tonimatas.ethylene.mixins",
+  "plugin": "com.llamalad7.mixinextras.platform.fabric.MixinExtrasConfigPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

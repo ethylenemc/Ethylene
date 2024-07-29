@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "ethylene",
+  "version": "${version}",
+  "name": "Ethylene",
+  "description": "Run Bukkit/Spigot plugins in Fabric.",
+  "authors": [],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/ethylene/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "dev.tonimatas.ethylene.Ethylene"
+    ]
+  },
+  "mixins": [
+    "ethylene.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loaderVersion}",
+    "fabric": "*",
+    "minecraft": "${minecraftVersion}"
+  }
+}
