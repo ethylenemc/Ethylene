@@ -16,6 +16,8 @@ base.archivesName.set("Ethylene")
 loom {
     splitEnvironmentSourceSets()
 
+    accessWidenerPath = file("src/main/resources/ethylene.accesswidener")
+    
     mods {
         create("ethylene") {
             sourceSet(sourceSets.main.get())
@@ -34,7 +36,11 @@ dependencies {
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricApiVersion")
     
-    implementation("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
+    // Bukkit and Spigot
+    implementation("org.spigotmc:spigot-api:1.21-R0.1-20240729.211617-83")
+    
+    // CraftBukkit
+    implementation("jline:jline:2.12.1")
 }
 
 tasks.withType<ProcessResources> {
