@@ -6,7 +6,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "minecraft.CrashReportMixin",
-    "minecraft.advancements.AdvancementHolderMixin"
+    "minecraft.advancements.AdvancementHolderMixin",
+    "minecraft.network.syncher.SynchedEntityDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1

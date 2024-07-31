@@ -29,3 +29,5 @@ accessible field net/minecraft/server/level/ServerLevel serverLevelData Lnet/min
 accessible method net/minecraft/nbt/ListTag <init> (Ljava/util/List;B)V
 accessible method net/minecraft/nbt/TagParser readArrayTag ()Lnet/minecraft/nbt/Tag;
 accessible method net/minecraft/nbt/TagParser type (Ljava/lang/String;)Lnet/minecraft/nbt/Tag;
+accessible method net/minecraft/network/syncher/SynchedEntityData getItem (Lnet/minecraft/network/syncher/EntityDataAccessor;)Lnet/minecraft/network/syncher/SynchedEntityData$DataItem;
+accessible field net/minecraft/network/syncher/SynchedEntityData isDirty Z

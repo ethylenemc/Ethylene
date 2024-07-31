@@ -15,7 +15,7 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.Lifecycle;
-import dev.tonimatas.ethylene.interfaces.EthyleneAdvancementHolder;
+import dev.tonimatas.ethylene.interfaces.advancements.EthyleneAdvancementHolder;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;

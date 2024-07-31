@@ -1,6 +1,6 @@
 package dev.tonimatas.ethylene.mixins.minecraft.advancements;
 
-import dev.tonimatas.ethylene.interfaces.EthyleneAdvancementHolder;
+import dev.tonimatas.ethylene.interfaces.advancements.EthyleneAdvancementHolder;
 import net.minecraft.advancements.AdvancementHolder;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.craftbukkit.advancement.CraftAdvancement;

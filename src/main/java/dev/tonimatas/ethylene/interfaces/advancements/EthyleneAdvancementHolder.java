@@ -1,4 +1,4 @@
-package dev.tonimatas.ethylene.interfaces;
+package dev.tonimatas.ethylene.interfaces.advancements;
 
 import org.bukkit.advancement.Advancement;
 
