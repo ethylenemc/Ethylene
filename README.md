@@ -7,12 +7,12 @@
  - [x] Ban
  - [ ] Block
  - [x] Bootstrap
- - [ ] Boss
+ - [x] Boss
  - [ ] Command
- - [ ] Configuration
+ - [x] Configuration
  - [ ] Conversations
- - [ ] Damage
- - [ ] Enchantments
+ - [x] Damage
+ - [x] Enchantments
  - [ ] Entity
  - [ ] Event
  - [ ] Generator
@@ -21,13 +21,13 @@
  - [ ] Legacy
  - [ ] Map
  - [x] Metadata
- - [ ] Packs
- - [ ] Persistence
+ - [x] Packs
+ - [x] Persistence
  - [ ] Potion
  - [x] Profile
  - [ ] Projectiles
  - [x] Scheduler
  - [ ] Scoreboard
  - [x] Structure
- - [ ] Tag
+ - [x] Tag
  - [ ] Util

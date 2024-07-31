@@ -41,7 +41,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.SectionPosition;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.EnumProtocol;
-import net.minecraft.network.chat.IChatBaseComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
@@ -88,9 +88,10 @@ import net.minecraft.network.protocol.game.PacketPlayOutWorldParticles;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.AdvancementDataPlayer;
 import net.minecraft.server.PlayerAdvancements;
-import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.PlayerChunkMap;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.PlayerConnection;
 import net.minecraft.server.players.WhiteListEntry;
 import net.minecraft.sounds.SoundEffect;
@@ -212,7 +213,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     private CraftWorldBorder clientWorldBorder = null;
     private IWorldBorderListener clientWorldBorderListener = createWorldBorderListener();
 
-    public CraftPlayer(CraftServer server, EntityPlayer entity) {
+    public CraftPlayer(CraftServer server, ServerPlayer entity) {
         super(server, entity);
 
         firstPlayed = System.currentTimeMillis();
@@ -356,7 +357,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
         if (getHandle().connection == null) return;
 
-        for (IChatBaseComponent component : CraftChatMessage.fromString(message)) {
+        for (Component component : CraftChatMessage.fromString(message)) {
             getHandle().sendSystemMessage(component);
         }
     }
@@ -410,15 +411,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             name = getName();
         }
         getHandle().listName = name.equals(getName()) ? null : CraftChatMessage.fromStringOrNull(name);
-        for (EntityPlayer player : (List<EntityPlayer>) server.getHandle().players) {
+        for (ServerPlayer player : (List<ServerPlayer>) server.getHandle().players) {
             if (player.getBukkitEntity().canSee(this)) {
                 player.connection.send(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.a.UPDATE_DISPLAY_NAME, getHandle()));
             }
         }
     }
 
-    private IChatBaseComponent playerListHeader;
-    private IChatBaseComponent playerListFooter;
+    private Component playerListHeader;
+    private Component playerListFooter;
 
     @Override
     public String getPlayerListHeader() {
@@ -452,7 +453,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     private void updatePlayerListHeaderFooter() {
         if (getHandle().connection == null) return;
 
-        PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter((this.playerListHeader == null) ? IChatBaseComponent.empty() : this.playerListHeader, (this.playerListFooter == null) ? IChatBaseComponent.empty() : this.playerListFooter);
+        PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter((this.playerListHeader == null) ? Component.empty() : this.playerListHeader, (this.playerListFooter == null) ? Component.empty() : this.playerListFooter);
         getHandle().connection.send(packet);
     }
 
@@ -801,7 +802,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
         if (getHandle().connection == null) return;
 
-        IChatBaseComponent[] components = CraftSign.sanitizeLines(lines);
+        Component[] components = CraftSign.sanitizeLines(lines);
         TileEntitySign sign = new TileEntitySign(CraftLocation.toBlockPosition(loc), Blocks.OAK_SIGN.defaultBlockState());
         SignText text = sign.getFrontText();
         text = text.setColor(EnumColor.byId(dyeColor.getWoolData()));
@@ -1024,7 +1025,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         Preconditions.checkArgument(location.getWorld() != null, "location.world");
         location.checkFinite();
 
-        EntityPlayer entity = getHandle();
+        ServerPlayer entity = getHandle();
 
         if (getHealth() == 0 || entity.isRemoved()) {
             return false;
@@ -1141,9 +1142,9 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         BlockPos bed = getHandle().getRespawnPosition();
 
         if (world != null && bed != null) {
-            Optional<EntityPlayer.RespawnPosAngle> spawnLoc = EntityPlayer.findRespawnAndUseSpawnBlock(world, bed, getHandle().getRespawnAngle(), getHandle().isRespawnForced(), true);
+            Optional<ServerPlayer.RespawnPosAngle> spawnLoc = ServerPlayer.findRespawnAndUseSpawnBlock(world, bed, getHandle().getRespawnAngle(), getHandle().isRespawnForced(), true);
             if (spawnLoc.isPresent()) {
-                EntityPlayer.RespawnPosAngle vec = spawnLoc.get();
+                ServerPlayer.RespawnPosAngle vec = spawnLoc.get();
                 return CraftLocation.toBukkit(vec.position(), world.getWorld(), vec.yaw(), 0);
             }
         }
@@ -1558,8 +1559,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         // Remove the hidden entity from this player user list, if they're on it
-        if (other instanceof EntityPlayer) {
-            EntityPlayer otherPlayer = (EntityPlayer) other;
+        if (other instanceof ServerPlayer) {
+            ServerPlayer otherPlayer = (ServerPlayer) other;
             if (otherPlayer.sentListPacket) {
                 getHandle().connection.send(new ClientboundPlayerInfoRemovePacket(List.of(otherPlayer.getUUID())));
             }
@@ -1633,8 +1634,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         PlayerChunkMap tracker = ((ServerLevel) getHandle().level()).getChunkSource().chunkMap;
         Entity other = ((CraftEntity) entity).getHandle();
 
-        if (other instanceof EntityPlayer) {
-            EntityPlayer otherPlayer = (EntityPlayer) other;
+        if (other instanceof ServerPlayer) {
+            ServerPlayer otherPlayer = (ServerPlayer) other;
             getHandle().connection.send(ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(otherPlayer)));
         }
 
@@ -1692,11 +1693,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
-    public EntityPlayer getHandle() {
-        return (EntityPlayer) entity;
+    public ServerPlayer getHandle() {
+        return (ServerPlayer) entity;
     }
 
-    public void setHandle(final EntityPlayer entity) {
+    public void setHandle(final ServerPlayer entity) {
         super.setHandle(entity);
     }
 
@@ -1743,7 +1744,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             }
 
             if (data.contains("newExp")) {
-                EntityPlayer handle = getHandle();
+                ServerPlayer handle = getHandle();
                 handle.newExp = data.getInt("newExp");
                 handle.newTotalExp = data.getInt("newTotalExp");
                 handle.newLevel = data.getInt("newLevel");
@@ -1759,7 +1760,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         CompoundTag data = nbttagcompound.getCompound("bukkit");
-        EntityPlayer handle = getHandle();
+        ServerPlayer handle = getHandle();
         data.putInt("newExp", handle.newExp);
         data.putInt("newTotalExp", handle.newTotalExp);
         data.putInt("newLevel", handle.newLevel);
@@ -2015,7 +2016,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public void setFlySpeed(float value) {
         validateSpeed(value);
-        EntityPlayer player = getHandle();
+        ServerPlayer player = getHandle();
         player.getAbilities().flyingSpeed = value / 2f;
         player.onUpdateAbilities();
 
@@ -2024,7 +2025,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public void setWalkSpeed(float value) {
         validateSpeed(value);
-        EntityPlayer player = getHandle();
+        ServerPlayer player = getHandle();
         player.getAbilities().walkingSpeed = value / 2f;
         player.onUpdateAbilities();
         getHandle().getAttribute(GenericAttributes.MOVEMENT_SPEED).setBaseValue(player.getAbilities().walkingSpeed); // SPIGOT-5833: combination of the two in 1.16+

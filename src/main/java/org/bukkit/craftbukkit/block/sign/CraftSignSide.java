@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.block.sign;
 
-import net.minecraft.network.chat.IChatBaseComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.EnumColor;
 import net.minecraft.world.level.block.entity.SignText;
 import org.bukkit.DyeColor;
@@ -26,7 +26,7 @@ public class CraftSignSide implements SignSide {
     public String[] getLines() {
         if (lines == null) {
             // Lazy initialization:
-            IChatBaseComponent[] messages = signText.getMessages(false);
+            Component[] messages = signText.getMessages(false);
             lines = new String[messages.length];
             System.arraycopy(CraftSign.revertComponents(messages), 0, lines, 0, lines.length);
             originalLines = new String[lines.length];

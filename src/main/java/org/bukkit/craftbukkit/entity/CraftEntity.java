@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.IChatBaseComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.level.PlayerChunkMap;
 import net.minecraft.server.level.ServerLevel;
@@ -536,7 +536,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public String getCustomName() {
-        IChatBaseComponent name = getHandle().getCustomName();
+        Component name = getHandle().getCustomName();
 
         if (name == null) {
             return null;

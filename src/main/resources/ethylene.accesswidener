@@ -1,4 +1,5 @@
 accessWidener v2 named
+
 accessible field net/minecraft/CrashReport systemReport Lnet/minecraft/SystemReport;
 accessible method net/minecraft/server/players/StoredUserEntry getUser ()Ljava/lang/Object;
 accessible field net/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings palette I
@@ -7,3 +8,24 @@ accessible field net/minecraft/world/level/levelgen/structure/templatesystem/Str
 accessible field net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager structureRepository Ljava/util/Map;
 accessible method net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager loadFromGenerated (Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;
 accessible method net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager loadFromResource (Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;
+accessible field net/minecraft/server/level/ServerBossEvent visible Z
+accessible field net/minecraft/world/BossEvent overlay Lnet/minecraft/world/BossEvent$BossBarOverlay;
+accessible field net/minecraft/world/BossEvent color Lnet/minecraft/world/BossEvent$BossBarColor;
+accessible field net/minecraft/world/BossEvent name Lnet/minecraft/network/chat/Component;
+accessible method net/minecraft/server/level/ServerBossEvent broadcast (Ljava/util/function/Function;)V
+accessible field net/minecraft/world/level/dimension/end/EndDragonFight level Lnet/minecraft/server/level/ServerLevel;
+accessible field net/minecraft/world/level/dimension/end/EndDragonFight dragonUUID Ljava/util/UUID;
+accessible field net/minecraft/world/level/dimension/end/EndDragonFight dragonEvent Lnet/minecraft/server/level/ServerBossEvent;
+accessible field net/minecraft/world/level/dimension/end/EndDragonFight portalLocation Lnet/minecraft/core/BlockPos;
+accessible method net/minecraft/world/level/dimension/end/EndDragonFight findExitPortal ()Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;
+accessible method net/minecraft/world/level/dimension/end/EndDragonFight spawnExitPortal (Z)V
+accessible field net/minecraft/world/level/dimension/end/EndDragonFight previouslyKilled Z
+accessible method net/minecraft/world/level/dimension/end/EndDragonFight respawnDragon (Ljava/util/List;)V
+accessible field net/minecraft/world/level/dimension/end/EndDragonFight respawnStage Lnet/minecraft/world/level/dimension/end/DragonRespawnAnimation;
+accessible method net/minecraft/world/level/dimension/end/EndDragonFight setRespawnStage (Lnet/minecraft/world/level/dimension/end/DragonRespawnAnimation;)V
+accessible method net/minecraft/world/damagesource/DamageSource <init> (Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V
+accessible field net/minecraft/server/packs/repository/Pack resources Lnet/minecraft/server/packs/repository/Pack$ResourcesSupplier;
+accessible field net/minecraft/server/level/ServerLevel serverLevelData Lnet/minecraft/world/level/storage/ServerLevelData;
+accessible method net/minecraft/nbt/ListTag <init> (Ljava/util/List;B)V
+accessible method net/minecraft/nbt/TagParser readArrayTag ()Lnet/minecraft/nbt/Tag;
+accessible method net/minecraft/nbt/TagParser type (Ljava/lang/String;)Lnet/minecraft/nbt/Tag;

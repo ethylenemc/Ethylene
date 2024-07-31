@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.IRegistry;
+import net.minecraft.core.Registry;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.IBlockData;
@@ -25,11 +26,11 @@ public final class OldCraftChunkData implements ChunkGenerator.ChunkData {
     private final int minHeight;
     private final int maxHeight;
     private final ChunkSection[] sections;
-    private final IRegistry<BiomeBase> biomes;
+    private final Registry<net.minecraft.world.level.biome.Biome> biomes;
     private Set<BlockPos> tiles;
     private final Set<BlockPos> lights = new HashSet<>();
 
-    public OldCraftChunkData(int minHeight, int maxHeight, IRegistry<BiomeBase> biomes) {
+    public OldCraftChunkData(int minHeight, int maxHeight, Registry<net.minecraft.world.level.biome.Biome> biomes) {
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
         this.biomes = biomes;

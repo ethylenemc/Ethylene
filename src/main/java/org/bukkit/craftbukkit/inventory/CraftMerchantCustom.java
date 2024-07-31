@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.network.chat.IChatBaseComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEffect;
 import net.minecraft.sounds.SoundEffects;
 import net.minecraft.world.entity.player.EntityHuman;
@@ -30,7 +30,7 @@ public class CraftMerchantCustom extends CraftMerchant {
 
     public static class MinecraftMerchant implements IMerchant {
 
-        private final IChatBaseComponent title;
+        private final Component title;
         private final MerchantRecipeList trades = new MerchantRecipeList();
         private EntityHuman tradingPlayer;
         protected CraftMerchant craftMerchant;
@@ -70,7 +70,7 @@ public class CraftMerchantCustom extends CraftMerchant {
         public void notifyTradeUpdated(ItemStack itemstack) {
         }
 
-        public IChatBaseComponent getScoreboardDisplayName() {
+        public Component getScoreboardDisplayName() {
             return title;
         }
 

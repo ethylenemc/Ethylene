@@ -1,12 +1,8 @@
 package org.bukkit.craftbukkit.packs;
 
 import com.google.common.base.Preconditions;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import net.minecraft.server.packs.repository.ResourcePackLoader;
-import net.minecraft.server.packs.repository.ResourcePackRepository;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackRepository;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -20,15 +16,19 @@ import org.bukkit.inventory.ItemType;
 import org.bukkit.packs.DataPack;
 import org.bukkit.packs.DataPackManager;
 
+import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 public class CraftDataPackManager implements DataPackManager {
 
-    private final ResourcePackRepository handle;
+    private final PackRepository handle;
 
-    public CraftDataPackManager(ResourcePackRepository resourcePackRepository) {
+    public CraftDataPackManager(PackRepository resourcePackRepository) {
         this.handle = resourcePackRepository;
     }
 
-    public ResourcePackRepository getHandle() {
+    public PackRepository getHandle() {
         return this.handle;
     }
 
@@ -37,7 +37,7 @@ public class CraftDataPackManager implements DataPackManager {
         // Based in the command for datapacks need reload for get the updated list of datapacks
         this.getHandle().reload();
 
-        Collection<ResourcePackLoader> availablePacks = this.getHandle().getAvailablePacks();
+        Collection<Pack> availablePacks = this.getHandle().getAvailablePacks();
         return availablePacks.stream().map(CraftDataPack::new).collect(Collectors.toUnmodifiableList());
     }
 
@@ -54,7 +54,7 @@ public class CraftDataPackManager implements DataPackManager {
 
         CraftWorld craftWorld = ((CraftWorld) world);
         return craftWorld.getHandle().serverLevelData.getDataConfiguration().dataPacks().getEnabled().stream().map(packName -> {
-            ResourcePackLoader resourcePackLoader = this.getHandle().getPack(packName);
+            Pack resourcePackLoader = this.getHandle().getPack(packName);
             if (resourcePackLoader != null) {
                 return new CraftDataPack(resourcePackLoader);
             }
@@ -68,7 +68,7 @@ public class CraftDataPackManager implements DataPackManager {
 
         CraftWorld craftWorld = ((CraftWorld) world);
         return craftWorld.getHandle().serverLevelData.getDataConfiguration().dataPacks().getDisabled().stream().map(packName -> {
-            ResourcePackLoader resourcePackLoader = this.getHandle().getPack(packName);
+            Pack resourcePackLoader = this.getHandle().getPack(packName);
             if (resourcePackLoader != null) {
                 return new CraftDataPack(resourcePackLoader);
             }
@@ -116,7 +116,7 @@ public class CraftDataPackManager implements DataPackManager {
         Preconditions.checkArgument(entityType != EntityType.UNKNOWN, "EntityType.UNKNOWN its not allowed here");
 
         CraftWorld craftWorld = ((CraftWorld) world);
-        EntityTypes<?> nmsEntity = CraftEntityType.bukkitToMinecraft(entityType);
+        net.minecraft.world.entity.EntityType<?> nmsEntity = CraftEntityType.bukkitToMinecraft(entityType);
         return nmsEntity.isEnabled(craftWorld.getHandle().enabledFeatures());
     }
 }

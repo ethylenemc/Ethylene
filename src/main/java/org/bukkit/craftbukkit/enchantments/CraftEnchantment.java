@@ -1,8 +1,7 @@
 package org.bukkit.craftbukkit.enchantments;
 
 import com.google.common.base.Preconditions;
-import java.util.Locale;
-import net.minecraft.SystemUtils;
+import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
@@ -17,6 +16,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Locale;
 
 public class CraftEnchantment extends Enchantment implements Handleable<net.minecraft.world.item.enchantment.Enchantment> {
 
@@ -148,7 +149,7 @@ public class CraftEnchantment extends Enchantment implements Handleable<net.mine
 
     @Override
     public String getTranslationKey() {
-        return SystemUtils.makeDescriptionId("enchantment", handle.unwrapKey().get().location());
+        return Util.makeDescriptionId("enchantment", handle.unwrapKey().get().location());
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.IChatBaseComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.server.network.FilteredText;
 import net.minecraft.world.item.component.WritableBookContent;
@@ -37,7 +37,7 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
     protected String title;
     protected String author;
     // Stored as components and serialized as JSON. See SPIGOT-5063, SPIGOT-5350, SPIGOT-3206
-    protected List<IChatBaseComponent> pages; // null and empty are two different states internally
+    protected List<Component> pages; // null and empty are two different states internally
     protected boolean resolved;
     protected int generation;
 
@@ -52,20 +52,20 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
             this.generation = bookMeta.generation;
 
             if (bookMeta.pages != null) {
-                this.pages = new ArrayList<IChatBaseComponent>(bookMeta.pages.size());
+                this.pages = new ArrayList<Component>(bookMeta.pages.size());
                 pages.addAll(bookMeta.pages);
             }
         } else if (meta instanceof CraftMetaBook) {
             CraftMetaBook bookMeta = (CraftMetaBook) meta;
 
             if (bookMeta.pages != null) {
-                this.pages = new ArrayList<IChatBaseComponent>(bookMeta.pages.size());
+                this.pages = new ArrayList<Component>(bookMeta.pages.size());
 
                 // Convert from plain Strings to JSON:
                 // This happens for example during book signing.
                 for (String page : bookMeta.pages) {
                     // We don't insert any non-plain text features (such as clickable links) during this conversion.
-                    IChatBaseComponent component = CraftChatMessage.fromString(page, true, true)[0];
+                    Component component = CraftChatMessage.fromString(page, true, true)[0];
                     pages.add(component);
                 }
             }
@@ -81,12 +81,12 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
             this.resolved = written.resolved();
             this.generation = written.generation();
 
-            List<Filterable<IChatBaseComponent>> pages = written.pages();
-            this.pages = new ArrayList<IChatBaseComponent>(pages.size());
+            List<Filterable<Component>> pages = written.pages();
+            this.pages = new ArrayList<Component>(pages.size());
             // Note: We explicitly check for and truncate oversized books and pages,
             // because they can come directly from clients when handling book edits.
             for (int i = 0; i < Math.min(pages.size(), MAX_PAGES); i++) {
-                IChatBaseComponent page = pages.get(i).raw();
+                Component page = pages.get(i).raw();
 
                 this.pages.add(page);
             }
@@ -102,7 +102,7 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
 
         Iterable<?> pages = SerializableMeta.getObject(Iterable.class, map, BOOK_PAGES.BUKKIT, true);
         if (pages != null) {
-            this.pages = new ArrayList<IChatBaseComponent>();
+            this.pages = new ArrayList<Component>();
             for (Object page : pages) {
                 if (page instanceof String) {
                     internalAddPage(CraftChatMessage.fromJSONOrString((String) page, false, true, MAX_PAGE_LENGTH, false));
@@ -119,8 +119,8 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
         super.applyToItem(itemData);
 
         if (pages != null) {
-            List<Filterable<IChatBaseComponent>> list = new ArrayList<>();
-            for (IChatBaseComponent page : pages) {
+            List<Filterable<Component>> list = new ArrayList<>();
+            for (Component page : pages) {
                 list.add(Filterable.passThrough(page));
             }
             itemData.put(BOOK_CONTENT, new WrittenBookContent(Filterable.from(FilteredText.passThrough(title)), this.author, this.generation, list, this.resolved));
@@ -237,10 +237,10 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
         return page;
     }
 
-    private void internalAddPage(IChatBaseComponent page) {
+    private void internalAddPage(Component page) {
         // asserted: page != null
         if (this.pages == null) {
-            this.pages = new ArrayList<IChatBaseComponent>();
+            this.pages = new ArrayList<Component>();
         } else if (this.pages.size() >= MAX_PAGES) {
             return;
         }
@@ -290,7 +290,7 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
     public CraftMetaBookSigned clone() {
         CraftMetaBookSigned meta = (CraftMetaBookSigned) super.clone();
         if (this.pages != null) {
-            meta.pages = new ArrayList<IChatBaseComponent>(this.pages);
+            meta.pages = new ArrayList<Component>(this.pages);
         }
         return meta;
     }

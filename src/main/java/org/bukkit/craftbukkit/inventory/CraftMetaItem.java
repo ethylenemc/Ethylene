@@ -54,7 +54,7 @@ import net.minecraft.nbt.NBTReadLimiter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.SnbtPrinterTagVisitor;
-import net.minecraft.network.chat.IChatBaseComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Unit;
@@ -203,8 +203,8 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
         }
     }
 
-    static final ItemMetaKeyType<IChatBaseComponent> NAME = new ItemMetaKeyType(DataComponents.CUSTOM_NAME, "display-name");
-    static final ItemMetaKeyType<IChatBaseComponent> ITEM_NAME = new ItemMetaKeyType(DataComponents.ITEM_NAME, "item-name");
+    static final ItemMetaKeyType<Component> NAME = new ItemMetaKeyType(DataComponents.CUSTOM_NAME, "display-name");
+    static final ItemMetaKeyType<Component> ITEM_NAME = new ItemMetaKeyType(DataComponents.ITEM_NAME, "item-name");
     static final ItemMetaKeyType<ItemLore> LORE = new ItemMetaKeyType<>(DataComponents.LORE, "lore");
     static final ItemMetaKeyType<CustomModelData> CUSTOM_MODEL_DATA = new ItemMetaKeyType<>(DataComponents.CUSTOM_MODEL_DATA, "custom-model-data");
     static final ItemMetaKeyType<ItemEnchantments> ENCHANTMENTS = new ItemMetaKeyType<>(DataComponents.ENCHANTMENTS, "enchants");
@@ -247,9 +247,9 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
     static final ItemMetaKeyType<CustomData> CUSTOM_DATA = new ItemMetaKeyType<>(DataComponents.CUSTOM_DATA);
 
     // We store the raw original JSON representation of all text data. See SPIGOT-5063, SPIGOT-5656, SPIGOT-5304
-    private IChatBaseComponent displayName;
-    private IChatBaseComponent itemName;
-    private List<IChatBaseComponent> lore; // null and empty are two different states internally
+    private Component displayName;
+    private Component itemName;
+    private List<Component> lore; // null and empty are two different states internally
     private Integer customModelData;
     private Map<String, String> blockData;
     private Map<Enchantment, Integer> enchantments;
@@ -287,7 +287,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
         this.itemName = meta.itemName;
 
         if (meta.lore != null) {
-            this.lore = new ArrayList<IChatBaseComponent>(meta.lore);
+            this.lore = new ArrayList<Component>(meta.lore);
         }
 
         this.customModelData = meta.customModelData;
@@ -338,10 +338,10 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
         });
 
         getOrEmpty(tag, LORE).ifPresent((l) -> {
-            List<IChatBaseComponent> list = l.lines();
-            lore = new ArrayList<IChatBaseComponent>(list.size());
+            List<Component> list = l.lines();
+            lore = new ArrayList<Component>(list.size());
             for (int index = 0; index < list.size(); index++) {
-                IChatBaseComponent line = list.get(index);
+                Component line = list.get(index);
                 lore.add(line);
             }
         });
@@ -507,7 +507,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
 
         Iterable<?> lore = SerializableMeta.getObject(Iterable.class, map, LORE.BUKKIT, true);
         if (lore != null) {
-            safelyAdd(lore, this.lore = new ArrayList<IChatBaseComponent>(), true);
+            safelyAdd(lore, this.lore = new ArrayList<Component>(), true);
         }
 
         Integer customModelData = SerializableMeta.getObject(Integer.class, map, CUSTOM_MODEL_DATA.BUKKIT, true);
@@ -1119,7 +1119,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
             this.lore = null;
         } else {
             if (this.lore == null) {
-                this.lore = new ArrayList<IChatBaseComponent>(lore.size());
+                this.lore = new ArrayList<Component>(lore.size());
             } else {
                 this.lore.clear();
             }
@@ -1605,7 +1605,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
         try {
             CraftMetaItem clone = (CraftMetaItem) super.clone();
             if (this.lore != null) {
-                clone.lore = new ArrayList<IChatBaseComponent>(this.lore);
+                clone.lore = new ArrayList<Component>(this.lore);
             }
             clone.customModelData = this.customModelData;
             clone.blockData = this.blockData;
@@ -1667,7 +1667,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
             // SPIGOT-7625: Convert lore to json before serializing it
             List<String> jsonLore = new ArrayList<>();
 
-            for (IChatBaseComponent component : lore) {
+            for (Component component : lore) {
                 jsonLore.add(CraftChatMessage.toJSON(component));
             }
 
@@ -1833,7 +1833,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
         builder.put(key.BUKKIT, mods);
     }
 
-    static void safelyAdd(Iterable<?> addFrom, Collection<IChatBaseComponent> addTo, boolean possiblyJsonInput) {
+    static void safelyAdd(Iterable<?> addFrom, Collection<Component> addTo, boolean possiblyJsonInput) {
         if (addFrom == null) {
             return;
         }
@@ -1847,15 +1847,15 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                     throw new IllegalArgumentException(addFrom + " cannot contain non-string " + object.getClass().getName());
                 }
 
-                addTo.add(IChatBaseComponent.empty());
+                addTo.add(Component.empty());
             } else {
                 String entry = object.toString();
-                IChatBaseComponent component = (possiblyJsonInput) ? CraftChatMessage.fromJSONOrString(entry) : CraftChatMessage.fromStringOrNull(entry);
+                Component component = (possiblyJsonInput) ? CraftChatMessage.fromJSONOrString(entry) : CraftChatMessage.fromStringOrNull(entry);
 
                 if (component != null) {
                     addTo.add(component);
                 } else {
-                    addTo.add(IChatBaseComponent.empty());
+                    addTo.add(Component.empty());
                 }
             }
         }

@@ -15,6 +15,7 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.Lifecycle;
+import dev.tonimatas.ethylene.interfaces.EthyleneAdvancementHolder;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -63,6 +64,7 @@ import net.minecraft.server.ReloadableServerRegistries;
 import net.minecraft.server.ServerCommand;
 import net.minecraft.server.WorldLoader;
 import net.minecraft.server.bossevents.BossBattleCustom;
+import net.minecraft.server.bossevents.CustomBossEvent;
 import net.minecraft.server.commands.CommandReload;
 import net.minecraft.server.dedicated.DedicatedPlayerList;
 import net.minecraft.server.dedicated.DedicatedServer;
@@ -80,6 +82,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.ChatDeserializer;
 import net.minecraft.util.datafix.DataConverterRegistry;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.village.VillageSiege;
 import net.minecraft.world.entity.npc.MobSpawnerCat;
@@ -107,6 +110,7 @@ import net.minecraft.world.level.levelgen.MobSpawnerPatrol;
 import net.minecraft.world.level.levelgen.MobSpawnerPhantom;
 import net.minecraft.world.level.levelgen.WorldDimensions;
 import net.minecraft.world.level.levelgen.WorldOptions;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidType;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.WorldMap;
@@ -115,6 +119,7 @@ import net.minecraft.world.level.storage.LevelDataAndDimensions;
 import net.minecraft.world.level.storage.WorldDataServer;
 import net.minecraft.world.level.storage.WorldNBTStorage;
 import net.minecraft.world.level.validation.ContentValidationException;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.Vec3D;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
@@ -2154,7 +2159,7 @@ public final class CraftServer implements Server {
         return warningState;
     }
 
-    public List<String> tabComplete(CommandSender sender, String message, ServerLevel world, Vec3D pos, boolean forceCommand) {
+    public List<String> tabComplete(CommandSender sender, String message, ServerLevel world, Vec3 pos, boolean forceCommand) {
         if (!(sender instanceof Player)) {
             return ImmutableList.of();
         }
@@ -2173,7 +2178,7 @@ public final class CraftServer implements Server {
         return tabEvent.isCancelled() ? Collections.EMPTY_LIST : tabEvent.getCompletions();
     }
 
-    public List<String> tabCompleteCommand(Player player, String message, ServerLevel world, Vec3D pos) {
+    public List<String> tabCompleteCommand(Player player, String message, ServerLevel world, Vec3 pos) {
         List<String> completions = null;
         try {
             if (message.startsWith("/")) {
@@ -2304,7 +2309,7 @@ public final class CraftServer implements Server {
         Preconditions.checkArgument(barColor != null, "BarColor key cannot be null");
         Preconditions.checkArgument(barStyle != null, "BarStyle key cannot be null");
 
-        BossBattleCustom bossBattleCustom = getServer().getCustomBossEvents().create(CraftNamespacedKey.toMinecraft(key), CraftChatMessage.fromString(title, true)[0]);
+        CustomBossEvent bossBattleCustom = getServer().getCustomBossEvents().create(CraftNamespacedKey.toMinecraft(key), CraftChatMessage.fromString(title, true)[0]);
         CraftKeyedBossbar craftKeyedBossbar = new CraftKeyedBossbar(bossBattleCustom);
         craftKeyedBossbar.setColor(barColor);
         craftKeyedBossbar.setStyle(barStyle);
@@ -2320,9 +2325,9 @@ public final class CraftServer implements Server {
 
     @Override
     public Iterator<KeyedBossBar> getBossBars() {
-        return Iterators.unmodifiableIterator(Iterators.transform(getServer().getCustomBossEvents().getEvents().iterator(), new Function<BossBattleCustom, org.bukkit.boss.KeyedBossBar>() {
+        return Iterators.unmodifiableIterator(Iterators.transform(getServer().getCustomBossEvents().getEvents().iterator(), new Function<CustomBossEvent, org.bukkit.boss.KeyedBossBar>() {
             @Override
-            public org.bukkit.boss.KeyedBossBar apply(BossBattleCustom bossBattleCustom) {
+            public org.bukkit.boss.KeyedBossBar apply(CustomBossEvent bossBattleCustom) {
                 return bossBattleCustom.getBukkitEntity();
             }
         }));
@@ -2331,7 +2336,7 @@ public final class CraftServer implements Server {
     @Override
     public KeyedBossBar getBossBar(NamespacedKey key) {
         Preconditions.checkArgument(key != null, "key");
-        net.minecraft.server.bossevents.BossBattleCustom bossBattleCustom = getServer().getCustomBossEvents().get(CraftNamespacedKey.toMinecraft(key));
+        CustomBossEvent bossBattleCustom = getServer().getCustomBossEvents().get(CraftNamespacedKey.toMinecraft(key));
 
         return (bossBattleCustom == null) ? null : bossBattleCustom.getBukkitEntity();
     }
@@ -2339,8 +2344,8 @@ public final class CraftServer implements Server {
     @Override
     public boolean removeBossBar(NamespacedKey key) {
         Preconditions.checkArgument(key != null, "key");
-        net.minecraft.server.bossevents.BossBattleCustomData bossBattleCustomData = getServer().getCustomBossEvents();
-        net.minecraft.server.bossevents.BossBattleCustom bossBattleCustom = bossBattleCustomData.get(CraftNamespacedKey.toMinecraft(key));
+        net.minecraft.server.bossevents.CustomBossEvents bossBattleCustomData = getServer().getCustomBossEvents();
+        net.minecraft.server.bossevents.CustomBossEvent bossBattleCustom = bossBattleCustomData.get(CraftNamespacedKey.toMinecraft(key));
 
         if (bossBattleCustom != null) {
             bossBattleCustomData.remove(bossBattleCustom);
@@ -2369,7 +2374,7 @@ public final class CraftServer implements Server {
         Preconditions.checkArgument(key != null, "NamespacedKey key cannot be null");
 
         AdvancementHolder advancement = console.getAdvancements().get(CraftNamespacedKey.toMinecraft(key));
-        return (advancement == null) ? null : advancement.toBukkit();
+        return (advancement == null) ? null : ((EthyleneAdvancementHolder) (Object) advancement).toBukkit();
     }
 
     @Override
@@ -2377,7 +2382,7 @@ public final class CraftServer implements Server {
         return Iterators.unmodifiableIterator(Iterators.transform(console.getAdvancements().getAllAdvancements().iterator(), new Function<AdvancementHolder, org.bukkit.advancement.Advancement>() {
             @Override
             public org.bukkit.advancement.Advancement apply(AdvancementHolder advancement) {
-                return advancement.toBukkit();
+                return ((EthyleneAdvancementHolder) (Object) advancement).toBukkit();
             }
         }));
     }
@@ -2439,14 +2444,14 @@ public final class CraftServer implements Server {
             }
             case org.bukkit.Tag.REGISTRY_FLUIDS -> {
                 Preconditions.checkArgument(clazz == org.bukkit.Fluid.class, "Fluid namespace (%s) must have fluid type", clazz.getName());
-                TagKey<FluidType> fluidTagKey = TagKey.create(Registries.FLUID, key);
+                TagKey<Fluid> fluidTagKey = TagKey.create(Registries.FLUID, key);
                 if (BuiltInRegistries.FLUID.getTag(fluidTagKey).isPresent()) {
                     return (org.bukkit.Tag<T>) new CraftFluidTag(BuiltInRegistries.FLUID, fluidTagKey);
                 }
             }
             case org.bukkit.Tag.REGISTRY_ENTITY_TYPES -> {
                 Preconditions.checkArgument(clazz == org.bukkit.entity.EntityType.class, "Entity type namespace (%s) must have entity type", clazz.getName());
-                TagKey<EntityTypes<?>> entityTagKey = TagKey.create(Registries.ENTITY_TYPE, key);
+                TagKey<EntityType<?>> entityTagKey = TagKey.create(Registries.ENTITY_TYPE, key);
                 if (BuiltInRegistries.ENTITY_TYPE.getTag(entityTagKey).isPresent()) {
                     return (org.bukkit.Tag<T>) new CraftEntityTag(BuiltInRegistries.ENTITY_TYPE, entityTagKey);
                 }
@@ -2465,22 +2470,22 @@ public final class CraftServer implements Server {
         switch (registry) {
             case org.bukkit.Tag.REGISTRY_BLOCKS -> {
                 Preconditions.checkArgument(clazz == org.bukkit.Material.class, "Block namespace (%s) must have material type", clazz.getName());
-                IRegistry<Block> blockTags = BuiltInRegistries.BLOCK;
+                net.minecraft.core.Registry<Block> blockTags = BuiltInRegistries.BLOCK;
                 return blockTags.getTags().map(pair -> (org.bukkit.Tag<T>) new CraftBlockTag(blockTags, pair.getFirst())).collect(ImmutableList.toImmutableList());
             }
             case org.bukkit.Tag.REGISTRY_ITEMS -> {
                 Preconditions.checkArgument(clazz == org.bukkit.Material.class, "Item namespace (%s) must have material type", clazz.getName());
-                IRegistry<Item> itemTags = BuiltInRegistries.ITEM;
+                net.minecraft.core.Registry<Item> itemTags = BuiltInRegistries.ITEM;
                 return itemTags.getTags().map(pair -> (org.bukkit.Tag<T>) new CraftItemTag(itemTags, pair.getFirst())).collect(ImmutableList.toImmutableList());
             }
             case org.bukkit.Tag.REGISTRY_FLUIDS -> {
                 Preconditions.checkArgument(clazz == org.bukkit.Material.class, "Fluid namespace (%s) must have fluid type", clazz.getName());
-                IRegistry<FluidType> fluidTags = BuiltInRegistries.FLUID;
+                net.minecraft.core.Registry<Fluid> fluidTags = BuiltInRegistries.FLUID;
                 return fluidTags.getTags().map(pair -> (org.bukkit.Tag<T>) new CraftFluidTag(fluidTags, pair.getFirst())).collect(ImmutableList.toImmutableList());
             }
             case org.bukkit.Tag.REGISTRY_ENTITY_TYPES -> {
                 Preconditions.checkArgument(clazz == org.bukkit.entity.EntityType.class, "Entity type namespace (%s) must have entity type", clazz.getName());
-                IRegistry<EntityTypes<?>> entityTags = BuiltInRegistries.ENTITY_TYPE;
+                net.minecraft.core.Registry<EntityType<?>> entityTags = BuiltInRegistries.ENTITY_TYPE;
                 return entityTags.getTags().map(pair -> (org.bukkit.Tag<T>) new CraftEntityTag(entityTags, pair.getFirst())).collect(ImmutableList.toImmutableList());
             }
             default -> throw new IllegalArgumentException();
@@ -2491,7 +2496,7 @@ public final class CraftServer implements Server {
     public LootTable getLootTable(NamespacedKey key) {
         Preconditions.checkArgument(key != null, "NamespacedKey key cannot be null");
 
-        ReloadableServerRegistries.b registry = getServer().reloadableRegistries();
+        ReloadableServerRegistries.Holder registry = getServer().reloadableRegistries();
         return new CraftLootTable(key, registry.getLootTable(CraftLootTable.bukkitKeyToMinecraft(key)));
     }
 
