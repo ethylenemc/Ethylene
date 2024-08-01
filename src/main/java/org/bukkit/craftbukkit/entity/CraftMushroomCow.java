@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectList;
 import net.minecraft.world.entity.animal.EntityMushroomCow;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
@@ -38,7 +39,7 @@ public class CraftMushroomCow extends CraftCow implements MushroomCow {
     @Override
     public boolean addEffectToNextStew(PotionEffect potionEffect, boolean overwrite) {
         Preconditions.checkArgument(potionEffect != null, "PotionEffect cannot be null");
-        MobEffect minecraftPotionEffect = CraftPotionUtil.fromBukkit(potionEffect);
+        MobEffectInstance minecraftPotionEffect = CraftPotionUtil.fromBukkit(potionEffect);
         if (!overwrite && this.hasEffectForNextStew(potionEffect.getType())) {
             return false;
         }

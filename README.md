@@ -16,14 +16,14 @@
  - [ ] Entity
  - [ ] Event
  - [ ] Generator
- - [ ] Help
+ - [x] Help
  - [ ] Inventory
  - [ ] Legacy
- - [ ] Map
+ - [x] Map
  - [x] Metadata
  - [x] Packs
  - [x] Persistence
- - [ ] Potion
+ - [x] Potion
  - [x] Profile
  - [ ] Projectiles
  - [x] Scheduler

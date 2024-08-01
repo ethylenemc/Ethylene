@@ -26,6 +26,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.DynamicOpsNBT;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.AdvancementDataWorld;
 import net.minecraft.server.MinecraftServer;
@@ -33,6 +36,7 @@ import net.minecraft.util.datafix.DataConverterRegistry;
 import net.minecraft.util.datafix.fixes.DataConverterTypes;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.IBlockData;
@@ -200,8 +204,8 @@ public final class CraftMagicNumbers implements UnsafeValues {
             return Material.getMaterial(material);
         }
 
-        Dynamic<NBTBase> name = new Dynamic<>(DynamicOpsNBT.INSTANCE, NBTTagString.valueOf("minecraft:" + material.toLowerCase(Locale.ROOT)));
-        Dynamic<NBTBase> converted = DataConverterRegistry.getDataFixer().update(DataConverterTypes.ITEM_NAME, name, version, this.getDataVersion());
+        Dynamic<Tag> name = new Dynamic<>(NbtOps.INSTANCE, StringTag.valueOf("minecraft:" + material.toLowerCase(Locale.ROOT)));
+        Dynamic<Tag> converted = DataConverterRegistry.getDataFixer().update(DataConverterTypes.ITEM_NAME, name, version, this.getDataVersion());
 
         if (name.equals(converted)) {
             converted = DataConverterRegistry.getDataFixer().update(DataConverterTypes.BLOCK_NAME, name, version, this.getDataVersion());
@@ -351,7 +355,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
     @Override
     public String getTranslationKey(EntityType entityType) {
         Preconditions.checkArgument(entityType.getName() != null, "Invalid name of EntityType %s for translation key", entityType);
-        return EntityTypes.byString(entityType.getName()).map(EntityTypes::getDescriptionId).orElseThrow();
+        return net.minecraft.world.entity.EntityType.byString(entityType.getName()).map(net.minecraft.world.entity.EntityType::getDescriptionId).orElseThrow();
     }
 
     @Override
@@ -373,7 +377,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
 
     @Override
     public PotionType.InternalPotionData getInternalPotionData(NamespacedKey namespacedKey) {
-        PotionRegistry potionRegistry = CraftRegistry.getMinecraftRegistry(Registries.POTION)
+        Potion potionRegistry = CraftRegistry.getMinecraftRegistry(Registries.POTION)
                 .getOptional(CraftNamespacedKey.toMinecraft(namespacedKey)).orElseThrow();
 
         return new CraftPotionType(namespacedKey, potionRegistry);

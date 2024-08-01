@@ -1,15 +1,9 @@
 package org.bukkit.craftbukkit.map;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.saveddata.maps.WorldMap;
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -17,14 +11,17 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
+import java.util.*;
+import java.util.logging.Level;
+
 public final class CraftMapView implements MapView {
 
     private final Map<CraftPlayer, RenderData> renderCache = new HashMap<CraftPlayer, RenderData>();
     private final List<MapRenderer> renderers = new ArrayList<MapRenderer>();
     private final Map<MapRenderer, Map<CraftPlayer, CraftMapCanvas>> canvases = new HashMap<MapRenderer, Map<CraftPlayer, CraftMapCanvas>>();
-    protected final WorldMap worldMap;
+    protected final MapItemSavedData worldMap;
 
-    public CraftMapView(WorldMap worldMap) {
+    public CraftMapView(MapItemSavedData worldMap) {
         this.worldMap = worldMap;
         addRenderer(new CraftMapRenderer(this, worldMap));
     }
@@ -51,7 +48,7 @@ public final class CraftMapView implements MapView {
 
     @Override
     public World getWorld() {
-        ResourceKey<net.minecraft.world.level.World> dimension = worldMap.dimension;
+        ResourceKey<net.minecraft.world.level.Level> dimension = worldMap.dimension;
         ServerLevel world = MinecraftServer.getServer().getLevel(dimension);
 
         if (world != null) {

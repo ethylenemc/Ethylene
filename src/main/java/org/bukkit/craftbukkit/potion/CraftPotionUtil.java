@@ -5,7 +5,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectList;
+import net.minecraft.world.effect.MobEffectInstance;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -76,12 +76,12 @@ public class CraftPotionUtil {
         return new PotionData(type, false, false);
     }
 
-    public static MobEffect fromBukkit(PotionEffect effect) {
-        Holder<MobEffectList> type = CraftPotionEffectType.bukkitToMinecraftHolder(effect.getType());
-        return new MobEffect(type, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.hasParticles());
+    public static MobEffectInstance fromBukkit(PotionEffect effect) {
+        Holder<MobEffect> type = CraftPotionEffectType.bukkitToMinecraftHolder(effect.getType());
+        return new MobEffectInstance(type, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.hasParticles());
     }
 
-    public static PotionEffect toBukkit(MobEffect effect) {
+    public static PotionEffect toBukkit(MobEffectInstance effect) {
         PotionEffectType type = CraftPotionEffectType.minecraftHolderToBukkit(effect.getEffect());
         int amp = effect.getAmplifier();
         int duration = effect.getDuration();
@@ -90,7 +90,7 @@ public class CraftPotionUtil {
         return new PotionEffect(type, duration, amp, ambient, particles);
     }
 
-    public static boolean equals(Holder<MobEffectList> mobEffect, PotionEffectType type) {
+    public static boolean equals(Holder<MobEffect> mobEffect, PotionEffectType type) {
         PotionEffectType typeV = CraftPotionEffectType.minecraftHolderToBukkit(mobEffect);
         return typeV.equals(type);
     }
