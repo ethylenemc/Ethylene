@@ -5,8 +5,8 @@ import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
 public abstract class CraftVault extends CraftBlockData implements Vault {
 
-    private static final net.minecraft.world.level.block.state.properties.BlockStateEnum<?> VAULT_STATE = getEnum("vault_state");
-    private static final net.minecraft.world.level.block.state.properties.BlockStateBoolean OMINOUS = getBoolean("ominous");
+    private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> VAULT_STATE = getEnum("vault_state");
+    private static final net.minecraft.world.level.block.state.properties.BooleanProperty OMINOUS = getBoolean("ominous");
 
     @Override
     public org.bukkit.block.data.type.Vault.State getTrialSpawnerState() {

@@ -1,28 +1,14 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
+import net.minecraft.world.Container;
 import net.minecraft.world.IInventory;
 import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.world.inventory.InventoryCrafting;
 import net.minecraft.world.inventory.InventoryEnderChest;
 import net.minecraft.world.inventory.InventoryMerchant;
 import net.minecraft.world.level.block.BlockComposter;
-import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
-import net.minecraft.world.level.block.entity.CrafterBlockEntity;
-import net.minecraft.world.level.block.entity.IHopper;
-import net.minecraft.world.level.block.entity.TileEntityBarrel;
-import net.minecraft.world.level.block.entity.TileEntityBlastFurnace;
-import net.minecraft.world.level.block.entity.TileEntityBrewingStand;
-import net.minecraft.world.level.block.entity.TileEntityDispenser;
-import net.minecraft.world.level.block.entity.TileEntityDropper;
-import net.minecraft.world.level.block.entity.TileEntityFurnace;
-import net.minecraft.world.level.block.entity.TileEntityJukeBox;
-import net.minecraft.world.level.block.entity.TileEntityLectern;
-import net.minecraft.world.level.block.entity.TileEntityShulkerBox;
-import net.minecraft.world.level.block.entity.TileEntitySmoker;
+import net.minecraft.world.level.block.entity.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.util.CraftLegacy;
@@ -32,10 +18,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+
 public class CraftInventory implements Inventory {
     protected final IInventory inventory;
 
-    public CraftInventory(IInventory inventory) {
+    public CraftInventory(Container inventory) {
         this.inventory = inventory;
     }
 

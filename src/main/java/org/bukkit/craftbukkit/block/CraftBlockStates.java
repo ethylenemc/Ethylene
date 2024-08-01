@@ -1,72 +1,24 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
-import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.IRegistryCustom;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.GeneratorAccess;
-import net.minecraft.world.level.IWorldReader;
-import net.minecraft.world.level.block.entity.BrushableBlockEntity;
-import net.minecraft.world.level.block.entity.CalibratedSculkSensorBlockEntity;
-import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
-import net.minecraft.world.level.block.entity.CrafterBlockEntity;
-import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
-import net.minecraft.world.level.block.entity.HangingSignBlockEntity;
-import net.minecraft.world.level.block.entity.SculkCatalystBlockEntity;
-import net.minecraft.world.level.block.entity.SculkSensorBlockEntity;
-import net.minecraft.world.level.block.entity.SculkShriekerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TileEntityBanner;
-import net.minecraft.world.level.block.entity.TileEntityBarrel;
-import net.minecraft.world.level.block.entity.TileEntityBeacon;
-import net.minecraft.world.level.block.entity.TileEntityBed;
-import net.minecraft.world.level.block.entity.TileEntityBeehive;
-import net.minecraft.world.level.block.entity.TileEntityBell;
-import net.minecraft.world.level.block.entity.TileEntityBlastFurnace;
-import net.minecraft.world.level.block.entity.TileEntityBrewingStand;
-import net.minecraft.world.level.block.entity.TileEntityCampfire;
-import net.minecraft.world.level.block.entity.TileEntityChest;
-import net.minecraft.world.level.block.entity.TileEntityChestTrapped;
-import net.minecraft.world.level.block.entity.TileEntityCommand;
-import net.minecraft.world.level.block.entity.TileEntityComparator;
-import net.minecraft.world.level.block.entity.TileEntityConduit;
-import net.minecraft.world.level.block.entity.TileEntityDispenser;
-import net.minecraft.world.level.block.entity.TileEntityDropper;
-import net.minecraft.world.level.block.entity.TileEntityEnchantTable;
-import net.minecraft.world.level.block.entity.TileEntityEndGateway;
-import net.minecraft.world.level.block.entity.TileEntityEnderChest;
-import net.minecraft.world.level.block.entity.TileEntityEnderPortal;
-import net.minecraft.world.level.block.entity.TileEntityFurnaceFurnace;
-import net.minecraft.world.level.block.entity.TileEntityHopper;
-import net.minecraft.world.level.block.entity.TileEntityJigsaw;
-import net.minecraft.world.level.block.entity.TileEntityJukeBox;
-import net.minecraft.world.level.block.entity.TileEntityLectern;
-import net.minecraft.world.level.block.entity.TileEntityLightDetector;
-import net.minecraft.world.level.block.entity.TileEntityMobSpawner;
-import net.minecraft.world.level.block.entity.TileEntityShulkerBox;
-import net.minecraft.world.level.block.entity.TileEntitySign;
-import net.minecraft.world.level.block.entity.TileEntitySkull;
-import net.minecraft.world.level.block.entity.TileEntitySmoker;
-import net.minecraft.world.level.block.entity.TileEntityStructure;
-import net.minecraft.world.level.block.entity.TrialSpawnerBlockEntity;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.entity.vault.VaultBlockEntity;
-import net.minecraft.world.level.block.piston.TileEntityPiston;
-import net.minecraft.world.level.block.state.net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.CraftWorld;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.function.BiFunction;
 
 public final class CraftBlockStates {
 
@@ -156,7 +108,7 @@ public final class CraftBlockStates {
                         Material.SPRUCE_WALL_SIGN,
                         Material.WARPED_SIGN,
                         Material.WARPED_WALL_SIGN
-                ), CraftSign.class, CraftSign::new, TileEntitySign::new
+                ), CraftSign.class, CraftSign::new, SignBlockEntity::new
         );
 
         register(
@@ -202,7 +154,7 @@ public final class CraftBlockStates {
                         Material.WITHER_SKELETON_WALL_SKULL,
                         Material.ZOMBIE_HEAD,
                         Material.ZOMBIE_WALL_HEAD
-                ), CraftSkull.class, CraftSkull::new, TileEntitySkull::new
+                ), CraftSkull.class, CraftSkull::new, SkullBlockEntity::new
         );
 
         register(
@@ -210,7 +162,7 @@ public final class CraftBlockStates {
                         Material.COMMAND_BLOCK,
                         Material.REPEATING_COMMAND_BLOCK,
                         Material.CHAIN_COMMAND_BLOCK
-                ), CraftCommandBlock.class, CraftCommandBlock::new, TileEntityCommand::new
+                ), CraftCommandBlock.class, CraftCommandBlock::new, CommandBlockEntity::new
         );
 
         register(
@@ -247,7 +199,7 @@ public final class CraftBlockStates {
                         Material.WHITE_WALL_BANNER,
                         Material.YELLOW_BANNER,
                         Material.YELLOW_WALL_BANNER
-                ), CraftBanner.class, CraftBanner::new, TileEntityBanner::new
+                ), CraftBanner.class, CraftBanner::new, BannerBlockEntity::new
         );
 
         register(
@@ -269,7 +221,7 @@ public final class CraftBlockStates {
                         Material.GREEN_SHULKER_BOX,
                         Material.RED_SHULKER_BOX,
                         Material.BLACK_SHULKER_BOX
-                ), CraftShulkerBox.class, CraftShulkerBox::new, TileEntityShulkerBox::new
+                ), CraftShulkerBox.class, CraftShulkerBox::new, ShulkerBoxBlockEntity::new
         );
 
         register(
@@ -290,56 +242,56 @@ public final class CraftBlockStates {
                         Material.RED_BED,
                         Material.WHITE_BED,
                         Material.YELLOW_BED
-                ), CraftBed.class, CraftBed::new, TileEntityBed::new
+                ), CraftBed.class, CraftBed::new, BedBlockEntity::new
         );
 
         register(
                 Arrays.asList(
                         Material.BEEHIVE,
                         Material.BEE_NEST
-                ), CraftBeehive.class, CraftBeehive::new, TileEntityBeehive::new
+                ), CraftBeehive.class, CraftBeehive::new, BeehiveBlockEntity::new
         );
 
         register(
                 Arrays.asList(
                         Material.CAMPFIRE,
                         Material.SOUL_CAMPFIRE
-                ), CraftCampfire.class, CraftCampfire::new, TileEntityCampfire::new
+                ), CraftCampfire.class, CraftCampfire::new, CampfireBlockEntity::new
         );
 
-        register(Material.BARREL, CraftBarrel.class, CraftBarrel::new, TileEntityBarrel::new);
-        register(Material.BEACON, CraftBeacon.class, CraftBeacon::new, TileEntityBeacon::new);
-        register(Material.BELL, CraftBell.class, CraftBell::new, TileEntityBell::new);
-        register(Material.BLAST_FURNACE, CraftBlastFurnace.class, CraftBlastFurnace::new, TileEntityBlastFurnace::new);
-        register(Material.BREWING_STAND, CraftBrewingStand.class, CraftBrewingStand::new, TileEntityBrewingStand::new);
-        register(Material.CHEST, CraftChest.class, CraftChest::new, TileEntityChest::new);
+        register(Material.BARREL, CraftBarrel.class, CraftBarrel::new, BarrelBlockEntity::new);
+        register(Material.BEACON, CraftBeacon.class, CraftBeacon::new, BeaconBlockEntity::new);
+        register(Material.BELL, CraftBell.class, CraftBell::new, BellBlockEntity::new);
+        register(Material.BLAST_FURNACE, CraftBlastFurnace.class, CraftBlastFurnace::new, BlastFurnaceBlockEntity::new);
+        register(Material.BREWING_STAND, CraftBrewingStand.class, CraftBrewingStand::new, BrewingStandBlockEntity::new);
+        register(Material.CHEST, CraftChest.class, CraftChest::new, ChestBlockEntity::new);
         register(Material.CHISELED_BOOKSHELF, CraftChiseledBookshelf.class, CraftChiseledBookshelf::new, ChiseledBookShelfBlockEntity::new);
-        register(Material.COMPARATOR, CraftComparator.class, CraftComparator::new, TileEntityComparator::new);
-        register(Material.CONDUIT, CraftConduit.class, CraftConduit::new, TileEntityConduit::new);
-        register(Material.DAYLIGHT_DETECTOR, CraftDaylightDetector.class, CraftDaylightDetector::new, TileEntityLightDetector::new);
+        register(Material.COMPARATOR, CraftComparator.class, CraftComparator::new, ComparatorBlockEntity::new);
+        register(Material.CONDUIT, CraftConduit.class, CraftConduit::new, ConduitBlockEntity::new);
+        register(Material.DAYLIGHT_DETECTOR, CraftDaylightDetector.class, CraftDaylightDetector::new, DaylightDetectorBlockEntity::new);
         register(Material.DECORATED_POT, CraftDecoratedPot.class, CraftDecoratedPot::new, DecoratedPotBlockEntity::new);
-        register(Material.DISPENSER, CraftDispenser.class, CraftDispenser::new, TileEntityDispenser::new);
-        register(Material.DROPPER, CraftDropper.class, CraftDropper::new, TileEntityDropper::new);
-        register(Material.ENCHANTING_TABLE, CraftEnchantingTable.class, CraftEnchantingTable::new, TileEntityEnchantTable::new);
-        register(Material.ENDER_CHEST, CraftEnderChest.class, CraftEnderChest::new, TileEntityEnderChest::new);
-        register(Material.END_GATEWAY, CraftEndGateway.class, CraftEndGateway::new, TileEntityEndGateway::new);
-        register(Material.END_PORTAL, CraftEndPortal.class, CraftEndPortal::new, TileEntityEnderPortal::new);
-        register(Material.FURNACE, CraftFurnaceFurnace.class, CraftFurnaceFurnace::new, TileEntityFurnaceFurnace::new);
-        register(Material.HOPPER, CraftHopper.class, CraftHopper::new, TileEntityHopper::new);
-        register(Material.JIGSAW, CraftJigsaw.class, CraftJigsaw::new, TileEntityJigsaw::new);
-        register(Material.JUKEBOX, CraftJukebox.class, CraftJukebox::new, TileEntityJukeBox::new);
-        register(Material.LECTERN, CraftLectern.class, CraftLectern::new, TileEntityLectern::new);
-        register(Material.MOVING_PISTON, CraftMovingPiston.class, CraftMovingPiston::new, TileEntityPiston::new);
+        register(Material.DISPENSER, CraftDispenser.class, CraftDispenser::new, DispenserBlockEntity::new);
+        register(Material.DROPPER, CraftDropper.class, CraftDropper::new, DropperBlockEntity::new);
+        register(Material.ENCHANTING_TABLE, CraftEnchantingTable.class, CraftEnchantingTable::new, EnchantingTableBlockEntity::new);
+        register(Material.ENDER_CHEST, CraftEnderChest.class, CraftEnderChest::new, EnderChestBlockEntity::new);
+        register(Material.END_GATEWAY, CraftEndGateway.class, CraftEndGateway::new, TheEndGatewayBlockEntity::new);
+        register(Material.END_PORTAL, CraftEndPortal.class, CraftEndPortal::new, TheEndPortalBlockEntity::new);
+        register(Material.FURNACE, CraftFurnaceFurnace.class, CraftFurnaceFurnace::new, FurnaceBlockEntity::new);
+        register(Material.HOPPER, CraftHopper.class, CraftHopper::new, HopperBlockEntity::new);
+        register(Material.JIGSAW, CraftJigsaw.class, CraftJigsaw::new, JigsawBlockEntity::new);
+        register(Material.JUKEBOX, CraftJukebox.class, CraftJukebox::new, JukeboxBlockEntity::new);
+        register(Material.LECTERN, CraftLectern.class, CraftLectern::new, LecternBlockEntity::new);
+        register(Material.MOVING_PISTON, CraftMovingPiston.class, CraftMovingPiston::new, PistonMovingBlockEntity::new);
         register(Material.SCULK_CATALYST, CraftSculkCatalyst.class, CraftSculkCatalyst::new, SculkCatalystBlockEntity::new);
         register(Material.CALIBRATED_SCULK_SENSOR, CraftCalibratedSculkSensor.class, CraftCalibratedSculkSensor::new, CalibratedSculkSensorBlockEntity::new);
         register(Material.SCULK_SENSOR, CraftSculkSensor.class, CraftSculkSensor::new, SculkSensorBlockEntity::new);
         register(Material.SCULK_SHRIEKER, CraftSculkShrieker.class, CraftSculkShrieker::new, SculkShriekerBlockEntity::new);
-        register(Material.SMOKER, CraftSmoker.class, CraftSmoker::new, TileEntitySmoker::new);
-        register(Material.SPAWNER, CraftCreatureSpawner.class, CraftCreatureSpawner::new, TileEntityMobSpawner::new);
-        register(Material.STRUCTURE_BLOCK, CraftStructureBlock.class, CraftStructureBlock::new, TileEntityStructure::new);
+        register(Material.SMOKER, CraftSmoker.class, CraftSmoker::new, SmokerBlockEntity::new);
+        register(Material.SPAWNER, CraftCreatureSpawner.class, CraftCreatureSpawner::new, SpawnerBlockEntity::new);
+        register(Material.STRUCTURE_BLOCK, CraftStructureBlock.class, CraftStructureBlock::new, StructureBlockEntity::new);
         register(Material.SUSPICIOUS_SAND, CraftSuspiciousSand.class, CraftSuspiciousSand::new, BrushableBlockEntity::new);
         register(Material.SUSPICIOUS_GRAVEL, CraftBrushableBlock.class, CraftBrushableBlock::new, BrushableBlockEntity::new);
-        register(Material.TRAPPED_CHEST, CraftChest.class, CraftChest::new, TileEntityChestTrapped::new);
+        register(Material.TRAPPED_CHEST, CraftChest.class, CraftChest::new, TrappedChestBlockEntity::new);
         register(Material.CRAFTER, CraftCrafter.class, CraftCrafter::new, CrafterBlockEntity::new);
         register(Material.TRIAL_SPAWNER, CraftTrialSpawner.class, CraftTrialSpawner::new, TrialSpawnerBlockEntity::new);
         register(Material.VAULT, CraftVault.class, CraftVault::new, VaultBlockEntity::new);
@@ -406,7 +358,7 @@ public final class CraftBlockStates {
         return getBlockState(MinecraftServer.getDefaultRegistryAccess(), blockPosition, material, blockEntityTag);
     }
 
-    public static BlockState getBlockState(IWorldReader world, BlockPos blockPosition, Material material, @Nullable CompoundTag blockEntityTag) {
+    public static BlockState getBlockState(LevelReader world, BlockPos blockPosition, Material material, @Nullable CompoundTag blockEntityTag) {
         return getBlockState(world.registryAccess(), blockPosition, material, blockEntityTag);
     }
 
@@ -421,7 +373,7 @@ public final class CraftBlockStates {
         return getBlockState(MinecraftServer.getDefaultRegistryAccess(), BlockPos.ZERO, blockData, blockEntityTag);
     }
 
-    public static BlockState getBlockState(IWorldReader world, BlockPos blockPosition, net.minecraft.world.level.block.state.BlockState blockData, @Nullable CompoundTag blockEntityTag) {
+    public static BlockState getBlockState(LevelReader world, BlockPos blockPosition, net.minecraft.world.level.block.state.BlockState blockData, @Nullable CompoundTag blockEntityTag) {
         return getBlockState(world.registryAccess(), blockPosition, blockData, blockEntityTag);
     }
 
@@ -451,12 +403,12 @@ public final class CraftBlockStates {
     }
 
     // This ignores tile entity data.
-    public static CraftBlockState getBlockState(GeneratorAccess world, BlockPos pos) {
+    public static CraftBlockState getBlockState(LevelAccessor world, BlockPos pos) {
         return new CraftBlockState(CraftBlock.at(world, pos));
     }
 
     // This ignores tile entity data.
-    public static CraftBlockState getBlockState(GeneratorAccess world, BlockPos pos, int flag) {
+    public static CraftBlockState getBlockState(LevelAccessor world, BlockPos pos, int flag) {
         return new CraftBlockState(CraftBlock.at(world, pos), flag);
     }
 

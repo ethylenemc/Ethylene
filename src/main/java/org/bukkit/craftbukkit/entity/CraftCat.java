@@ -1,12 +1,9 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.Locale;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.animal.CatVariant;
-import net.minecraft.world.entity.animal.EntityCat;
-import net.minecraft.world.item.EnumColor;
 import org.bukkit.DyeColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -15,15 +12,17 @@ import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.Handleable;
 import org.bukkit.entity.Cat;
 
+import java.util.Locale;
+
 public class CraftCat extends CraftTameableAnimal implements Cat {
 
-    public CraftCat(CraftServer server, EntityCat entity) {
+    public CraftCat(CraftServer server, net.minecraft.world.entity.animal.Cat entity) {
         super(server, entity);
     }
 
     @Override
-    public EntityCat getHandle() {
-        return (EntityCat) super.getHandle();
+    public net.minecraft.world.entity.animal.Cat getHandle() {
+        return (net.minecraft.world.entity.animal.Cat) super.getHandle();
     }
 
     @Override
@@ -50,7 +49,7 @@ public class CraftCat extends CraftTameableAnimal implements Cat {
 
     @Override
     public void setCollarColor(DyeColor color) {
-        getHandle().setCollarColor(EnumColor.byId(color.getWoolData()));
+        getHandle().setCollarColor(net.minecraft.world.item.DyeColor.byId(color.getWoolData()));
     }
 
     public static class CraftType implements Type, Handleable<CatVariant> {

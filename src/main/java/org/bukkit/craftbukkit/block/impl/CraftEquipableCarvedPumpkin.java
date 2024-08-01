@@ -9,13 +9,13 @@ public final class CraftEquipableCarvedPumpkin extends org.bukkit.craftbukkit.bl
         super();
     }
 
-    public CraftEquipableCarvedPumpkin(net.minecraft.world.level.block.state.IBlockData state) {
+    public CraftEquipableCarvedPumpkin(net.minecraft.world.level.block.state.BlockState state) {
         super(state);
     }
 
     // org.bukkit.craftbukkit.block.data.CraftDirectional
 
-    private static final net.minecraft.world.level.block.state.properties.BlockStateEnum<?> FACING = getEnum(net.minecraft.world.level.block.EquipableCarvedPumpkinBlock.class, "facing");
+    private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> FACING = getEnum(net.minecraft.world.level.block.EquipableCarvedPumpkinBlock.class, "facing");
 
     @Override
     public org.bukkit.block.BlockFace getFacing() {

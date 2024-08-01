@@ -9,13 +9,13 @@ public final class CraftPinkPetals extends org.bukkit.craftbukkit.block.data.Cra
         super();
     }
 
-    public CraftPinkPetals(net.minecraft.world.level.block.state.IBlockData state) {
+    public CraftPinkPetals(net.minecraft.world.level.block.state.BlockState state) {
         super(state);
     }
 
     // org.bukkit.craftbukkit.block.data.type.CraftPinkPetals
 
-    private static final net.minecraft.world.level.block.state.properties.BlockStateInteger FLOWER_AMOUNT = getInteger(net.minecraft.world.level.block.PinkPetalsBlock.class, "flower_amount");
+    private static final net.minecraft.world.level.block.state.properties.IntegerProperty FLOWER_AMOUNT = getInteger(net.minecraft.world.level.block.PinkPetalsBlock.class, "flower_amount");
 
     @Override
     public int getFlowerAmount() {
@@ -34,7 +34,7 @@ public final class CraftPinkPetals extends org.bukkit.craftbukkit.block.data.Cra
 
     // org.bukkit.craftbukkit.block.data.CraftDirectional
 
-    private static final net.minecraft.world.level.block.state.properties.BlockStateEnum<?> FACING = getEnum(net.minecraft.world.level.block.PinkPetalsBlock.class, "facing");
+    private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> FACING = getEnum(net.minecraft.world.level.block.PinkPetalsBlock.class, "facing");
 
     @Override
     public org.bukkit.block.BlockFace getFacing() {

@@ -2,7 +2,6 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.projectile.EntityArrow;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -13,7 +12,7 @@ import org.bukkit.projectiles.ProjectileSource;
 
 public class CraftAbstractArrow extends AbstractProjectile implements AbstractArrow {
 
-    public CraftAbstractArrow(CraftServer server, EntityArrow entity) {
+    public CraftAbstractArrow(CraftServer server, net.minecraft.world.entity.projectile.AbstractArrow entity) {
         super(server, entity);
     }
 
@@ -97,7 +96,7 @@ public class CraftAbstractArrow extends AbstractProjectile implements AbstractAr
     @Override
     public void setPickupStatus(PickupStatus status) {
         Preconditions.checkArgument(status != null, "PickupStatus cannot be null");
-        getHandle().pickup = EntityArrow.PickupStatus.byOrdinal(status.ordinal());
+        getHandle().pickup = net.minecraft.world.entity.projectile.AbstractArrow.Pickup.byOrdinal(status.ordinal());
     }
 
     @Override
@@ -142,8 +141,8 @@ public class CraftAbstractArrow extends AbstractProjectile implements AbstractAr
     }
 
     @Override
-    public EntityArrow getHandle() {
-        return (EntityArrow) entity;
+    public net.minecraft.world.entity.projectile.AbstractArrow getHandle() {
+        return (net.minecraft.world.entity.projectile.AbstractArrow) entity;
     }
 
     @Override

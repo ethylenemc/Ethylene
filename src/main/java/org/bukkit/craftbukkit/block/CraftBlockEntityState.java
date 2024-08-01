@@ -1,16 +1,15 @@
 package org.bukkit.craftbukkit.block;
 
-import java.util.Set;
-import net.minecraft.core.IRegistryCustom;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.PacketListenerPlayOut;
-import net.minecraft.network.protocol.game.PacketPlayOutTileEntityData;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.GeneratorAccess;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -19,6 +18,8 @@ import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 public class CraftBlockEntityState<T extends BlockEntity> extends CraftBlockState implements TileState {
 
@@ -46,8 +47,8 @@ public class CraftBlockEntityState<T extends BlockEntity> extends CraftBlockStat
         this.load(tileEntity);
     }
 
-    private IRegistryCustom getRegistryAccess() {
-        GeneratorAccess worldHandle = getWorldHandle();
+    private RegistryAccess getRegistryAccess() {
+        LevelAccessor worldHandle = getWorldHandle();
         return (worldHandle != null) ? worldHandle.registryAccess() : MinecraftServer.getDefaultRegistryAccess();
     }
 
@@ -155,9 +156,9 @@ public class CraftBlockEntityState<T extends BlockEntity> extends CraftBlockStat
     }
 
     @Nullable
-    public Packet<PacketListenerPlayOut> getUpdatePacket(@NotNull Location location) {
+    public Packet<ClientGamePacketListener> getUpdatePacket(@NotNull Location location) {
         T vanillaTileEntitiy = (T) BlockEntity.loadStatic(CraftLocation.toBlockPosition(location), getHandle(), getSnapshotNBT(), getRegistryAccess());
-        return PacketPlayOutTileEntityData.create(vanillaTileEntitiy);
+        return ClientboundBlockEntityDataPacket.create(vanillaTileEntitiy);
     }
 
     @Override

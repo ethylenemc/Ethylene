@@ -1,9 +1,9 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import dev.tonimatas.ethylene.interfaces.network.synched.EthyleneSynchedEntityData;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.decoration.EntityHanging;
-import net.minecraft.world.entity.decoration.EntityItemFrame;
+import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.level.block.Blocks;
 import org.bukkit.Rotation;
 import org.bukkit.block.BlockFace;
@@ -13,13 +13,13 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.ItemFrame;
 
 public class CraftItemFrame extends CraftHanging implements ItemFrame {
-    public CraftItemFrame(CraftServer server, EntityItemFrame entity) {
+    public CraftItemFrame(CraftServer server, net.minecraft.world.entity.decoration.ItemFrame entity) {
         super(server, entity);
     }
 
     @Override
     public boolean setFacingDirection(BlockFace face, boolean force) {
-        EntityHanging hanging = getHandle();
+        HangingEntity hanging = getHandle();
         Direction oldDir = hanging.getDirection();
         Direction newDir = CraftBlock.blockFaceToNotch(face);
 
@@ -41,8 +41,8 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
         super.update();
 
         // mark dirty, so that the client gets updated with item and rotation
-        getHandle().getEntityData().markDirty(EntityItemFrame.DATA_ITEM);
-        getHandle().getEntityData().markDirty(EntityItemFrame.DATA_ROTATION);
+        ((EthyleneSynchedEntityData) getHandle().getEntityData()).markDirty(net.minecraft.world.entity.decoration.ItemFrame.DATA_ITEM); // Ethylene
+        ((EthyleneSynchedEntityData) getHandle().getEntityData()).markDirty(net.minecraft.world.entity.decoration.ItemFrame.DATA_ROTATION); // Ethylene
 
         // update redstone
         if (!getHandle().generation) {
@@ -157,8 +157,8 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
     }
 
     @Override
-    public EntityItemFrame getHandle() {
-        return (EntityItemFrame) entity;
+    public net.minecraft.world.entity.decoration.ItemFrame getHandle() {
+        return (net.minecraft.world.entity.decoration.ItemFrame) entity;
     }
 
     @Override

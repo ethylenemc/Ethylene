@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
-import net.minecraft.world.IInventory;
+import net.minecraft.world.Container;
 import net.minecraft.world.ITileInventory;
 import net.minecraft.world.level.block.entity.TileEntityLectern;
 import org.bukkit.block.Lectern;
@@ -10,7 +10,7 @@ public class CraftInventoryLectern extends CraftInventory implements LecternInve
 
     public ITileInventory tile;
 
-    public CraftInventoryLectern(IInventory inventory) {
+    public CraftInventoryLectern(Container inventory) {
         super(inventory);
         if (inventory instanceof TileEntityLectern.LecternInventory) {
             this.tile = ((TileEntityLectern.LecternInventory) inventory).getLectern();

@@ -5,30 +5,21 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.EntityPlayer;
-import net.minecraft.server.level.PlayerChunkMap;
+import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.entity.boss.EntityComplexPart;
-import net.minecraft.world.entity.boss.enderdragon.EntityEnderDragon;
-import net.minecraft.world.entity.player.EntityHuman;
-import net.minecraft.world.entity.projectile.EntityArrow;
+import net.minecraft.world.entity.boss.EnderDragonPart;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3D;
-import org.bukkit.EntityEffect;
-import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.craftbukkit.CraftServer;
@@ -41,24 +32,20 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.craftbukkit.util.CraftSpawnCategory;
 import org.bukkit.craftbukkit.util.CraftVector;
-import org.bukkit.entity.EntitySnapshot;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Pose;
-import org.bukkit.entity.SpawnCategory;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRemoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.permissions.PermissibleBase;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionAttachment;
-import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.permissions.ServerOperator;
+import org.bukkit.permissions.*;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
+
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public abstract class CraftEntity implements org.bukkit.entity.Entity {
     private static PermissibleBase perm;
@@ -80,13 +67,13 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         Preconditions.checkArgument(entity != null, "Unknown entity");
 
         // Special case human, since bukkit use Player interface for ...
-        if (entity instanceof EntityHuman && !(entity instanceof EntityPlayer)) {
-            return new CraftHumanEntity(server, (EntityHuman) entity);
+        if (entity instanceof net.minecraft.world.entity.player.Player && !(entity instanceof ServerPlayer)) {
+            return new CraftHumanEntity(server, (net.minecraft.world.entity.player.Player) entity);
         }
 
         // Special case complex part, since there is no extra entity type for them
-        if (entity instanceof EntityComplexPart complexPart) {
-            if (complexPart.parentMob instanceof EntityEnderDragon) {
+        if (entity instanceof EnderDragonPart complexPart) {
+            if (complexPart.parentMob instanceof EnderDragon) {
                 return new CraftEnderDragonPart(server, complexPart);
             } else {
                 return new CraftComplexPart(server, complexPart);
@@ -152,8 +139,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isOnGround() {
-        if (entity instanceof EntityArrow) {
-            return ((EntityArrow) entity).inGround;
+        if (entity instanceof AbstractArrow) {
+            return ((AbstractArrow) entity).inGround;
         }
         return entity.onGround();
     }
@@ -204,7 +191,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         if (location.getWorld() != null && !location.getWorld().equals(getWorld())) {
             // Prevent teleportation to an other world during world generation
             Preconditions.checkState(!entity.generation, "Cannot teleport entity to an other world during world generation");
-            entity.changeDimension(new DimensionTransition(((CraftWorld) location.getWorld()).getHandle(), CraftLocation.toVec3D(location), Vec3D.ZERO, location.getPitch(), location.getYaw(), DimensionTransition.DO_NOTHING, TeleportCause.PLUGIN));
+            entity.changeDimension(new DimensionTransition(((CraftWorld) location.getWorld()).getHandle(), CraftLocation.toVec3D(location), Vec3.ZERO, location.getPitch(), location.getYaw(), DimensionTransition.DO_NOTHING, TeleportCause.PLUGIN));
             return true;
         }
 
@@ -585,7 +572,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         ImmutableSet.Builder<Player> players = ImmutableSet.builder();
 
         ServerLevel world = ((CraftWorld) getWorld()).getHandle();
-        PlayerChunkMap.EntityTracker entityTracker = world.getChunkSource().chunkMap.entityMap.get(getEntityId());
+        ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(getEntityId());
 
         if (entityTracker != null) {
             for (ServerPlayerConnection connection : entityTracker.seenBy) {
@@ -816,11 +803,11 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return location.getWorld().addEntity(copy.getBukkitEntity());
     }
 
-    private Entity copy(net.minecraft.world.level.World level) {
+    private Entity copy(net.minecraft.world.level.Level level) {
         CompoundTag compoundTag = new CompoundTag();
         getHandle().saveAsPassenger(compoundTag, false);
 
-        return EntityTypes.loadEntityRecursive(compoundTag, level, java.util.function.Function.identity());
+        return net.minecraft.world.entity.EntityType.loadEntityRecursive(compoundTag, level, java.util.function.Function.identity());
     }
 
     public void storeBukkitValues(CompoundTag c) {
@@ -830,7 +817,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     }
 
     public void readBukkitValues(CompoundTag c) {
-        NBTBase base = c.get("BukkitValues");
+        Tag base = c.get("BukkitValues");
         if (base instanceof CompoundTag) {
             this.persistentDataContainer.putAll((CompoundTag) base);
         }
@@ -852,7 +839,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         }
 
         ServerLevel world = ((CraftWorld) getWorld()).getHandle();
-        PlayerChunkMap.EntityTracker entityTracker = world.getChunkSource().chunkMap.entityMap.get(getEntityId());
+        ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(getEntityId());
 
         if (entityTracker == null) {
             return;
@@ -861,13 +848,13 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         entityTracker.broadcast(getHandle().getAddEntityPacket(entityTracker.serverEntity));
     }
 
-    public void update(EntityPlayer player) {
+    public void update(ServerPlayer player) {
         if (!getHandle().isAlive()) {
             return;
         }
 
         ServerLevel world = ((CraftWorld) getWorld()).getHandle();
-        PlayerChunkMap.EntityTracker entityTracker = world.getChunkSource().chunkMap.entityMap.get(getEntityId());
+        ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(getEntityId());
 
         if (entityTracker == null) {
             return;

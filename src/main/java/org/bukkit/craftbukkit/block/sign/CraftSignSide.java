@@ -1,7 +1,6 @@
 package org.bukkit.craftbukkit.block.sign;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.EnumColor;
 import net.minecraft.world.level.block.entity.SignText;
 import org.bukkit.DyeColor;
 import org.bukkit.block.sign.SignSide;
@@ -64,7 +63,7 @@ public class CraftSignSide implements SignSide {
 
     @Override
     public void setColor(@NotNull DyeColor color) {
-        signText = signText.setColor(EnumColor.byId(color.getWoolData()));
+        signText = signText.setColor(net.minecraft.world.item.DyeColor.byId(color.getWoolData()));
     }
 
     public SignText applyLegacyStringToSignSide() {

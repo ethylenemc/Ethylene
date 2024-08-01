@@ -2,12 +2,9 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import java.util.List;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectList;
-import net.minecraft.world.entity.animal.EntityMushroomCow;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.potion.CraftPotionEffectType;
@@ -16,8 +13,10 @@ import org.bukkit.entity.MushroomCow;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
+
 public class CraftMushroomCow extends CraftCow implements MushroomCow {
-    public CraftMushroomCow(CraftServer server, EntityMushroomCow entity) {
+    public CraftMushroomCow(CraftServer server, net.minecraft.world.entity.animal.MushroomCow entity) {
         super(server, entity);
     }
 
@@ -47,7 +46,7 @@ public class CraftMushroomCow extends CraftCow implements MushroomCow {
         if (stewEffects == null) {
             stewEffects = SuspiciousStewEffects.EMPTY;
         }
-        SuspiciousStewEffects.a recordSuspiciousEffect = new SuspiciousStewEffects.a(minecraftPotionEffect.getEffect(), minecraftPotionEffect.getDuration());
+        SuspiciousStewEffects.Entry recordSuspiciousEffect = new SuspiciousStewEffects.Entry(minecraftPotionEffect.getEffect(), minecraftPotionEffect.getDuration());
         this.removeEffectFromNextStew(potionEffect.getType()); // Avoid duplicates of effects
         getHandle().stewEffects = stewEffects.withEffectAdded(recordSuspiciousEffect);
         return true;
@@ -65,7 +64,7 @@ public class CraftMushroomCow extends CraftCow implements MushroomCow {
             return false;
         }
 
-        Holder<MobEffectList> minecraftPotionEffectType = CraftPotionEffectType.bukkitToMinecraftHolder(potionEffectType);
+        Holder<MobEffect> minecraftPotionEffectType = CraftPotionEffectType.bukkitToMinecraftHolder(potionEffectType);
         getHandle().stewEffects = new SuspiciousStewEffects(stewEffects.effects().stream().filter((effect) -> !effect.effect().equals(minecraftPotionEffectType)).toList());
         return true;
     }
@@ -77,7 +76,7 @@ public class CraftMushroomCow extends CraftCow implements MushroomCow {
         if (stewEffects == null) {
             return false;
         }
-        Holder<MobEffectList> minecraftPotionEffectType = CraftPotionEffectType.bukkitToMinecraftHolder(potionEffectType);
+        Holder<MobEffect> minecraftPotionEffectType = CraftPotionEffectType.bukkitToMinecraftHolder(potionEffectType);
         return stewEffects.effects().stream().anyMatch(recordSuspiciousEffect -> recordSuspiciousEffect.effect().equals(minecraftPotionEffectType));
     }
 
@@ -87,8 +86,8 @@ public class CraftMushroomCow extends CraftCow implements MushroomCow {
     }
 
     @Override
-    public EntityMushroomCow getHandle() {
-        return (EntityMushroomCow) entity;
+    public net.minecraft.world.entity.animal.MushroomCow getHandle() {
+        return (net.minecraft.world.entity.animal.MushroomCow) entity;
     }
 
     @Override
@@ -100,7 +99,7 @@ public class CraftMushroomCow extends CraftCow implements MushroomCow {
     public void setVariant(Variant variant) {
         Preconditions.checkArgument(variant != null, "Variant cannot be null");
 
-        getHandle().setVariant(EntityMushroomCow.Type.values()[variant.ordinal()]);
+        getHandle().setVariant(net.minecraft.world.entity.animal.MushroomCow.MushroomType.values()[variant.ordinal()]);
     }
 
     @Override

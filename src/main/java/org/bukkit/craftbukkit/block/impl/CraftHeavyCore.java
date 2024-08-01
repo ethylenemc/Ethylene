@@ -9,13 +9,13 @@ public final class CraftHeavyCore extends org.bukkit.craftbukkit.block.data.Craf
         super();
     }
 
-    public CraftHeavyCore(net.minecraft.world.level.block.state.IBlockData state) {
+    public CraftHeavyCore(net.minecraft.world.level.block.state.BlockState state) {
         super(state);
     }
 
     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
 
-    private static final net.minecraft.world.level.block.state.properties.BlockStateBoolean WATERLOGGED = getBoolean(net.minecraft.world.level.block.HeavyCoreBlock.class, "waterlogged");
+    private static final net.minecraft.world.level.block.state.properties.BooleanProperty WATERLOGGED = getBoolean(net.minecraft.world.level.block.HeavyCoreBlock.class, "waterlogged");
 
     @Override
     public boolean isWaterlogged() {

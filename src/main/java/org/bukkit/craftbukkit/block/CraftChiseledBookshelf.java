@@ -2,7 +2,7 @@ package org.bukkit.craftbukkit.block;
 
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
-import net.minecraft.world.phys.Vec2F;
+import net.minecraft.world.phys.Vec2;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
@@ -50,19 +50,19 @@ public class CraftChiseledBookshelf extends CraftBlockEntityState<ChiseledBookSh
     public int getSlot(Vector clickVector) {
         BlockFace facing = ((Directional) this.getBlockData()).getFacing();
 
-        Vec2F faceVector;
+        Vec2 faceVector;
         switch (facing) {
         case NORTH:
-            faceVector = new Vec2F((float) (1.0f - clickVector.getX()), (float) clickVector.getY());
+            faceVector = new Vec2((float) (1.0f - clickVector.getX()), (float) clickVector.getY());
             break;
         case SOUTH:
-            faceVector = new Vec2F((float) clickVector.getX(), (float) clickVector.getY());
+            faceVector = new Vec2((float) clickVector.getX(), (float) clickVector.getY());
             break;
         case WEST:
-            faceVector = new Vec2F((float) clickVector.getZ(), (float) clickVector.getY());
+            faceVector = new Vec2((float) clickVector.getZ(), (float) clickVector.getY());
             break;
         case EAST:
-            faceVector = new Vec2F((float) (1f - clickVector.getZ()), (float) clickVector.getY());
+            faceVector = new Vec2((float) (1f - clickVector.getZ()), (float) clickVector.getY());
             break;
         case DOWN:
         case UP:
@@ -73,7 +73,7 @@ public class CraftChiseledBookshelf extends CraftBlockEntityState<ChiseledBookSh
         return getHitSlot(faceVector);
     }
 
-    private static int getHitSlot(Vec2F vec2f) {
+    private static int getHitSlot(Vec2 vec2f) {
         int i = vec2f.y >= 0.5F ? 0 : 1;
         int j = ChiseledBookShelfBlock.getSection(vec2f.x);
 

@@ -2,7 +2,6 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.animal.EntityBee;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftLocation;
@@ -10,13 +9,13 @@ import org.bukkit.entity.Bee;
 
 public class CraftBee extends CraftAnimals implements Bee {
 
-    public CraftBee(CraftServer server, EntityBee entity) {
+    public CraftBee(CraftServer server, net.minecraft.world.entity.animal.Bee entity) {
         super(server, entity);
     }
 
     @Override
-    public EntityBee getHandle() {
-        return (EntityBee) entity;
+    public net.minecraft.world.entity.animal.Bee getHandle() {
+        return (net.minecraft.world.entity.animal.Bee) entity;
     }
 
     @Override

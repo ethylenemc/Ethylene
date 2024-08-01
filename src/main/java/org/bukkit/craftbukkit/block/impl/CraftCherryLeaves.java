@@ -9,14 +9,14 @@ public final class CraftCherryLeaves extends org.bukkit.craftbukkit.block.data.C
         super();
     }
 
-    public CraftCherryLeaves(net.minecraft.world.level.block.state.IBlockData state) {
+    public CraftCherryLeaves(net.minecraft.world.level.block.state.BlockState state) {
         super(state);
     }
 
     // org.bukkit.craftbukkit.block.data.type.CraftLeaves
 
-    private static final net.minecraft.world.level.block.state.properties.BlockStateInteger DISTANCE = getInteger(net.minecraft.world.level.block.CherryLeavesBlock.class, "distance");
-    private static final net.minecraft.world.level.block.state.properties.BlockStateBoolean PERSISTENT = getBoolean(net.minecraft.world.level.block.CherryLeavesBlock.class, "persistent");
+    private static final net.minecraft.world.level.block.state.properties.IntegerProperty DISTANCE = getInteger(net.minecraft.world.level.block.CherryLeavesBlock.class, "distance");
+    private static final net.minecraft.world.level.block.state.properties.BooleanProperty PERSISTENT = getBoolean(net.minecraft.world.level.block.CherryLeavesBlock.class, "persistent");
 
     @Override
     public boolean isPersistent() {
@@ -40,7 +40,7 @@ public final class CraftCherryLeaves extends org.bukkit.craftbukkit.block.data.C
 
     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
 
-    private static final net.minecraft.world.level.block.state.properties.BlockStateBoolean WATERLOGGED = getBoolean(net.minecraft.world.level.block.CherryLeavesBlock.class, "waterlogged");
+    private static final net.minecraft.world.level.block.state.properties.BooleanProperty WATERLOGGED = getBoolean(net.minecraft.world.level.block.CherryLeavesBlock.class, "waterlogged");
 
     @Override
     public boolean isWaterlogged() {
