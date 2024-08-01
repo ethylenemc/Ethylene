@@ -3,10 +3,6 @@ package org.bukkit.craftbukkit.inventory;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap.Builder;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
@@ -15,6 +11,11 @@ import org.bukkit.craftbukkit.potion.CraftPotionEffectType;
 import org.bukkit.inventory.meta.SuspiciousStewMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaSuspiciousStew extends CraftMetaItem implements SuspiciousStewMeta {

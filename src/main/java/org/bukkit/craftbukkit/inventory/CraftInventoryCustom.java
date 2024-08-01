@@ -1,9 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.IInventory;
 import net.minecraft.world.entity.player.EntityHuman;
@@ -13,6 +10,10 @@ import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class CraftInventoryCustom extends CraftInventory {
     public CraftInventoryCustom(InventoryHolder owner, InventoryType type) {

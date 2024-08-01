@@ -2,15 +2,13 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap.Builder;
-import java.util.Map;
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.component.LodestoneTracker;
@@ -19,6 +17,9 @@ import org.bukkit.World;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.inventory.meta.CompassMeta;
+
+import java.util.Map;
+import java.util.Optional;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {

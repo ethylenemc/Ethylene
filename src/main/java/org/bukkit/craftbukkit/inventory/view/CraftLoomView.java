@@ -1,7 +1,5 @@
 package org.bukkit.craftbukkit.inventory.view;
 
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.Holder;
 import net.minecraft.world.inventory.ContainerLoom;
 import net.minecraft.world.level.block.entity.EnumBannerPatternType;
@@ -11,6 +9,9 @@ import org.bukkit.craftbukkit.inventory.CraftInventoryView;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.view.LoomView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CraftLoomView extends CraftInventoryView<ContainerLoom> implements LoomView {
 

@@ -2,7 +2,6 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
-import java.util.Map;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.MapItemColor;
@@ -13,6 +12,8 @@ import org.bukkit.Color;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
+
+import java.util.Map;
 
 @DelegateDeserialization(SerializableMeta.class)
 class CraftMetaMap extends CraftMetaItem implements MapMeta {

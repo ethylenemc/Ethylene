@@ -3,15 +3,16 @@ package org.bukkit.craftbukkit.inventory;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.BundleContents;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BundleMeta;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaBundle extends CraftMetaItem implements BundleMeta {

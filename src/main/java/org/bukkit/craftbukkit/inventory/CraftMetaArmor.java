@@ -1,9 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.collect.ImmutableMap.Builder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import org.bukkit.NamespacedKey;
@@ -16,6 +13,10 @@ import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaArmor extends CraftMetaItem implements ArmorMeta {

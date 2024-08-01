@@ -4,10 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap.Builder;
 import it.unimi.dsi.fastutil.ints.IntList;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.FireworkExplosion;
@@ -19,6 +15,11 @@ import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.craftbukkit.inventory.CraftMetaItem.ItemMetaKey.Specific;
 import org.bukkit.craftbukkit.inventory.CraftMetaItem.ItemMetaKey.Specific.To;
 import org.bukkit.inventory.meta.FireworkMeta;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @DelegateDeserialization(SerializableMeta.class)
 class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {

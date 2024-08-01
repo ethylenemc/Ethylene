@@ -4,17 +4,10 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
-import java.util.Map;
-import java.util.Set;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.component.PatchedDataComponentMap;
-import net.minecraft.core.component.TypedDataComponent;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.core.component.*;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.world.item.EnumColor;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,6 +19,9 @@ import org.bukkit.craftbukkit.block.CraftBlockEntityState;
 import org.bukkit.craftbukkit.block.CraftBlockStates;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.inventory.meta.BlockStateMeta;
+
+import java.util.Map;
+import java.util.Set;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta {

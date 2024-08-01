@@ -1,14 +1,15 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.world.item.crafting.RecipeItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.recipe.CookingBookCategory;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface CraftRecipe extends Recipe {
 

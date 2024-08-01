@@ -1,9 +1,10 @@
 package org.bukkit.craftbukkit.packs;
 
-import java.util.UUID;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.packs.ResourcePack;
+
+import java.util.UUID;
 
 public class CraftResourcePack implements ResourcePack {
 

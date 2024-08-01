@@ -1,16 +1,13 @@
 package org.bukkit.craftbukkit.legacy.reroute;
 
 import com.google.common.base.Preconditions;
+import org.bukkit.craftbukkit.util.ApiVersion;
+import org.objectweb.asm.Type;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.bukkit.craftbukkit.util.ApiVersion;
-import org.objectweb.asm.Type;
+import java.util.*;
 
 public class RerouteBuilder {
 

@@ -2,13 +2,13 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.world.Container;
-import net.minecraft.world.IInventory;
 import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.world.inventory.InventoryCrafting;
 import net.minecraft.world.inventory.InventoryEnderChest;
 import net.minecraft.world.inventory.InventoryMerchant;
 import net.minecraft.world.level.block.BlockComposter;
-import net.minecraft.world.level.block.entity.*;
+import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
+import net.minecraft.world.level.block.entity.CrafterBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.util.CraftLegacy;

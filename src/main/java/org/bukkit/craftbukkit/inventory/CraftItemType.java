@@ -4,8 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
@@ -35,6 +33,9 @@ import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class CraftItemType<M extends ItemMeta> implements ItemType.Typed<M>, Handleable<Item> {
 

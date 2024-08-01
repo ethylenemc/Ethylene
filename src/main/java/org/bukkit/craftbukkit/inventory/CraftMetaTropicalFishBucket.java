@@ -1,11 +1,10 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.collect.ImmutableMap;
-import java.util.Map;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.world.item.component.CustomData;
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
@@ -13,6 +12,8 @@ import org.bukkit.craftbukkit.entity.CraftTropicalFish;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.entity.TropicalFish;
 import org.bukkit.inventory.meta.TropicalFishBucketMeta;
+
+import java.util.Map;
 
 @DelegateDeserialization(SerializableMeta.class)
 class CraftMetaTropicalFishBucket extends CraftMetaItem implements TropicalFishBucketMeta {

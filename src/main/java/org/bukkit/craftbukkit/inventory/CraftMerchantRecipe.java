@@ -1,13 +1,14 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import java.util.List;
-import java.util.Optional;
 import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
+
+import java.util.List;
+import java.util.Optional;
 
 public class CraftMerchantRecipe extends MerchantRecipe {
 

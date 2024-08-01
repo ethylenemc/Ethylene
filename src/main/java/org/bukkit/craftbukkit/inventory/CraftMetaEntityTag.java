@@ -2,15 +2,16 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.collect.Sets;
-import java.util.Map;
-import java.util.Set;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.world.item.component.CustomData;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
+
+import java.util.Map;
+import java.util.Set;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaEntityTag extends CraftMetaItem {

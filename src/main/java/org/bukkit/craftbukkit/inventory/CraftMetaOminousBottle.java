@@ -2,11 +2,12 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap.Builder;
-import java.util.Map;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.inventory.meta.OminousBottleMeta;
+
+import java.util.Map;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaOminousBottle extends CraftMetaItem implements OminousBottleMeta {

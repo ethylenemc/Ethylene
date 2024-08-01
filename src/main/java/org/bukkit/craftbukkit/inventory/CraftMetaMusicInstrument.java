@@ -1,7 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.collect.ImmutableMap;
-import java.util.Map;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
@@ -10,6 +9,8 @@ import org.bukkit.MusicInstrument;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.craftbukkit.CraftMusicInstrument;
 import org.bukkit.inventory.meta.MusicInstrumentMeta;
+
+import java.util.Map;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaMusicInstrument extends CraftMetaItem implements MusicInstrumentMeta {

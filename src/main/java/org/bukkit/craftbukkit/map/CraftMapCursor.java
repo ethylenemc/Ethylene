@@ -1,6 +1,5 @@
 package org.bukkit.craftbukkit.map;
 
-import java.util.Locale;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.saveddata.maps.MapDecorationType;
@@ -9,6 +8,8 @@ import org.bukkit.Registry;
 import org.bukkit.craftbukkit.CraftRegistry;
 import org.bukkit.craftbukkit.util.Handleable;
 import org.bukkit.map.MapCursor;
+
+import java.util.Locale;
 
 public final class CraftMapCursor {
 

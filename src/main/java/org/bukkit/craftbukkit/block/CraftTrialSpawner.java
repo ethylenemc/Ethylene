@@ -2,8 +2,6 @@ package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
-import java.util.Collection;
-import java.util.UUID;
 import net.minecraft.world.level.block.TrialSpawnerBlock;
 import net.minecraft.world.level.block.entity.TrialSpawnerBlockEntity;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerData;
@@ -14,6 +12,9 @@ import org.bukkit.block.TrialSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.spawner.TrialSpawnerConfiguration;
+
+import java.util.Collection;
+import java.util.UUID;
 
 public class CraftTrialSpawner extends CraftBlockEntityState<TrialSpawnerBlockEntity> implements TrialSpawner {
 

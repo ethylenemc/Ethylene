@@ -1,12 +1,9 @@
 package org.bukkit.craftbukkit.legacy.fieldrename;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.TreeMap;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.util.ApiVersion;
+
+import java.util.*;
 
 public record FieldRenameData(RenameData<String> renameData, RenameData<NamespacedKey> keyRenameData) {
 

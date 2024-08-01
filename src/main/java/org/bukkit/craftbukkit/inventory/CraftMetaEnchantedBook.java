@@ -2,8 +2,6 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
@@ -11,6 +9,9 @@ import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @DelegateDeserialization(SerializableMeta.class)
 class CraftMetaEnchantedBook extends CraftMetaItem implements EnchantmentStorageMeta {

@@ -1,17 +1,18 @@
 package org.bukkit.craftbukkit.util;
 
 import com.mojang.logging.LogQueues;
+import jline.console.ConsoleReader;
+import jline.console.completer.CandidateListCompletionHandler;
+import org.bukkit.craftbukkit.Main;
+import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.Ansi.Erase;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jline.console.ConsoleReader;
-import jline.console.completer.CandidateListCompletionHandler;
-import org.bukkit.craftbukkit.Main;
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.Ansi.Erase;
 
 public class TerminalConsoleWriterThread extends Thread {
     private final ResourceBundle bundle = ResourceBundle.getBundle(CandidateListCompletionHandler.class.getName(), Locale.getDefault());

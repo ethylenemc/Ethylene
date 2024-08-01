@@ -1,11 +1,12 @@
 package org.bukkit.craftbukkit.util;
 
+import jline.console.ConsoleReader;
+import jline.console.completer.CompletionHandler;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import jline.console.ConsoleReader;
-import jline.console.completer.CompletionHandler;
 
 /**
  * SPIGOT-6705: Make sure we print the display line again on tab completion, so that the user does not get stuck on it

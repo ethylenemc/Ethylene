@@ -1,40 +1,13 @@
 package org.bukkit.craftbukkit.inventory;
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemBanner;
-import net.minecraft.world.item.ItemBlock;
-import net.minecraft.world.item.ItemMonsterEgg;
-import net.minecraft.world.item.ItemSign;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BlockShulkerBox;
 import org.bukkit.inventory.ItemType;
-import org.bukkit.inventory.meta.ArmorMeta;
-import org.bukkit.inventory.meta.AxolotlBucketMeta;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.BundleMeta;
-import org.bukkit.inventory.meta.ColorableArmorMeta;
-import org.bukkit.inventory.meta.CompassMeta;
-import org.bukkit.inventory.meta.CrossbowMeta;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.FireworkEffectMeta;
-import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.KnowledgeBookMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.MapMeta;
-import org.bukkit.inventory.meta.MusicInstrumentMeta;
-import org.bukkit.inventory.meta.OminousBottleMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.inventory.meta.ShieldMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.inventory.meta.SpawnEggMeta;
-import org.bukkit.inventory.meta.SuspiciousStewMeta;
-import org.bukkit.inventory.meta.TropicalFishBucketMeta;
+import org.bukkit.inventory.meta.*;
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public final class CraftItemMetas {
 

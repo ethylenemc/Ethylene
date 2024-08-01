@@ -1,16 +1,10 @@
 package org.bukkit.craftbukkit.legacy.enums;
 
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
 import org.bukkit.Registry;
 import org.bukkit.util.OldEnum;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 
 public class ImposterEnumSet extends AbstractSet<Object> {
 

@@ -1,11 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
@@ -18,6 +13,12 @@ import org.bukkit.block.DecoratedPot;
 import org.bukkit.craftbukkit.inventory.CraftInventoryDecoratedPot;
 import org.bukkit.craftbukkit.inventory.CraftItemType;
 import org.bukkit.inventory.DecoratedPotInventory;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CraftDecoratedPot extends CraftBlockEntityState<DecoratedPotBlockEntity> implements DecoratedPot {
 

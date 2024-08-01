@@ -2,14 +2,11 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.collect.ImmutableMap.Builder;
 import com.mojang.authlib.GameProfile;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 import net.minecraft.SystemUtils;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.DynamicOpsNBT;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DynamicOpsNBT;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.bukkit.Bukkit;
@@ -22,6 +19,10 @@ import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.craftbukkit.util.CraftNamespacedKey;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 @DelegateDeserialization(SerializableMeta.class)
 class CraftMetaSkull extends CraftMetaItem implements SkullMeta {

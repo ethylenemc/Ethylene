@@ -4,29 +4,11 @@ import com.google.common.base.Converter;
 import com.google.common.base.Enums;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.craftbukkit.legacy.FieldRename;
-import org.bukkit.craftbukkit.legacy.reroute.DoNotReroute;
-import org.bukkit.craftbukkit.legacy.reroute.InjectPluginVersion;
-import org.bukkit.craftbukkit.legacy.reroute.NotInBukkit;
-import org.bukkit.craftbukkit.legacy.reroute.RequireCompatibility;
-import org.bukkit.craftbukkit.legacy.reroute.RequirePluginVersion;
-import org.bukkit.craftbukkit.legacy.reroute.RerouteArgumentType;
-import org.bukkit.craftbukkit.legacy.reroute.RerouteReturnType;
-import org.bukkit.craftbukkit.legacy.reroute.RerouteStatic;
+import org.bukkit.craftbukkit.legacy.reroute.*;
 import org.bukkit.craftbukkit.util.ApiVersion;
 import org.bukkit.craftbukkit.util.ClassTraverser;
 import org.bukkit.entity.Cat;
@@ -34,6 +16,14 @@ import org.bukkit.entity.Frog;
 import org.bukkit.entity.Villager;
 import org.bukkit.map.MapCursor;
 import org.bukkit.util.OldEnum;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @NotInBukkit
 @RequireCompatibility("enum-compatibility-mode")

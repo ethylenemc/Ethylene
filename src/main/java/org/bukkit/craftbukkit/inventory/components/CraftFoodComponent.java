@@ -2,13 +2,6 @@ package org.bukkit.craftbukkit.inventory.components;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import net.minecraft.world.food.FoodInfo;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -17,6 +10,9 @@ import org.bukkit.craftbukkit.potion.CraftPotionUtil;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.components.FoodComponent;
 import org.bukkit.potion.PotionEffect;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SerializableAs("Food")
 public final class CraftFoodComponent implements FoodComponent {
