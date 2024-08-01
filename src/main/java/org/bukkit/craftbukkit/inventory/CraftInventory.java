@@ -23,13 +23,13 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class CraftInventory implements Inventory {
-    protected final IInventory inventory;
+    protected final Container inventory;
 
     public CraftInventory(Container inventory) {
         this.inventory = inventory;
     }
 
-    public IInventory getInventory() {
+    public Container getInventory() {
         return inventory;
     }
 

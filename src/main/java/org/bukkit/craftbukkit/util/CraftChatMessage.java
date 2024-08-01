@@ -3,29 +3,16 @@ package org.bukkit.craftbukkit.util;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.gson.JsonParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.minecraft.ChatFormatting;
-import net.minecraft.EnumChatFormat;
-import net.minecraft.network.chat.ChatClickable;
-import net.minecraft.network.chat.ChatClickable.EnumClickAction;
-import net.minecraft.network.chat.ChatHexColor;
-import net.minecraft.network.chat.ChatModifier;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.IChatMutableComponent;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.ChatColor;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class CraftChatMessage {
 
@@ -95,7 +82,7 @@ public final class CraftChatMessage {
                         hex.append(c);
 
                         if (hex.length() == 7) {
-                            modifier = RESET.withColor(ChatHexColor.parseColor(hex.toString()).result().get());
+                            modifier = RESET.withColor(TextColor.parseColor(hex.toString()).result().get());
                             hex = null;
                         }
                     } else if (format.isFormat() && format != ChatFormatting.RESET) {
@@ -130,9 +117,9 @@ public final class CraftChatMessage {
                         if (!(match.startsWith("http://") || match.startsWith("https://"))) {
                             match = "http://" + match;
                         }
-                        modifier = modifier.withClickEvent(new ChatClickable(EnumClickAction.OPEN_URL, match));
+                        modifier = modifier.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, match));
                         appendNewComponent(matcher.end(groupId));
-                        modifier = modifier.withClickEvent((ChatClickable) null);
+                        modifier = modifier.withClickEvent((ClickEvent) null);
                     }
                     break;
                 case 3:
@@ -274,8 +261,8 @@ public final class CraftChatMessage {
         boolean hadFormat = false;
         for (Component c : component) {
             Style modi = c.getStyle();
-            ChatHexColor color = modi.getColor();
-            if (c.getContents() != LiteralContents.EMPTY || color != null) {
+            TextColor color = modi.getColor();
+            if (c.getContents() != PlainTextContents.EMPTY || color != null) {
                 if (color != null) {
                     if (color.format != null) {
                         out.append(color.format);
@@ -325,13 +312,13 @@ public final class CraftChatMessage {
     }
 
     private static Component fixComponent(MutableComponent component, Matcher matcher) {
-        if (component.getContents() instanceof LiteralContents) {
-            LiteralContents text = ((LiteralContents) component.getContents());
+        if (component.getContents() instanceof PlainTextContents) {
+            PlainTextContents text = ((PlainTextContents) component.getContents());
             String msg = text.text();
             if (matcher.reset(msg).find()) {
                 matcher.reset();
 
-                ChatModifier modifier = component.getStyle();
+                Style modifier = component.getStyle();
                 List<Component> extras = new ArrayList<Component>();
                 List<Component> extrasOld = new ArrayList<Component>(component.getSiblings());
                 component = Component.empty();
@@ -349,7 +336,7 @@ public final class CraftChatMessage {
                     extras.add(prev);
 
                     MutableComponent link = Component.literal(matcher.group());
-                    Style linkModi = modifier.withClickEvent(new ChatClickable(EnumClickAction.OPEN_URL, match));
+                    Style linkModi = modifier.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, match));
                     link.setStyle(linkModi);
                     extras.add(link);
 

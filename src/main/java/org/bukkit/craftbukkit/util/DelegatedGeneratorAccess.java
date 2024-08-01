@@ -565,7 +565,7 @@ public abstract class DelegatedGeneratorAccess implements WorldGenLevel {
     }
 
     @Override
-    public Fluid getFluidState(BlockPos arg0) {
+    public FluidState getFluidState(BlockPos arg0) {
         return handle.getFluidState(arg0);
     }
 

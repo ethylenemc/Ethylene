@@ -1,6 +1,5 @@
 package org.bukkit.craftbukkit.util;
 
-import net.minecraft.core.BaseBlockPosition;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import org.bukkit.util.BlockVector;

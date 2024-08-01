@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.command;
 
-import net.minecraft.commands.CommandListenerWrapper;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.bukkit.block.Block;
@@ -28,10 +28,10 @@ public class CraftBlockCommandSender extends ServerCommandSender implements Bloc
             throw new UnsupportedOperationException("Cannot change operator status of a block");
         }
     });
-    private final CommandListenerWrapper block;
+    private final CommandSourceStack block;
     private final BlockEntity tile;
 
-    public CraftBlockCommandSender(CommandListenerWrapper commandBlockListenerAbstract, BlockEntity tile) {
+    public CraftBlockCommandSender(CommandSourceStack commandBlockListenerAbstract, BlockEntity tile) {
         super(SHARED_PERM);
         this.block = commandBlockListenerAbstract;
         this.tile = tile;
@@ -71,7 +71,7 @@ public class CraftBlockCommandSender extends ServerCommandSender implements Bloc
         SHARED_PERM.setOp(value);
     }
 
-    public CommandListenerWrapper getWrapper() {
+    public CommandSourceStack getWrapper() {
         return block;
     }
 }

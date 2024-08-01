@@ -1,8 +1,6 @@
 package org.bukkit.craftbukkit.command;
 
-import java.util.Set;
-import java.util.UUID;
-import net.minecraft.commands.CommandListenerWrapper;
+import net.minecraft.commands.CommandSourceStack;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ProxiedCommandSender;
@@ -11,19 +9,22 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Set;
+import java.util.UUID;
+
 public class ProxiedNativeCommandSender implements ProxiedCommandSender {
 
-    private final CommandListenerWrapper orig;
+    private final CommandSourceStack orig;
     private final CommandSender caller;
     private final CommandSender callee;
 
-    public ProxiedNativeCommandSender(CommandListenerWrapper orig, CommandSender caller, CommandSender callee) {
+    public ProxiedNativeCommandSender(CommandSourceStack orig, CommandSender caller, CommandSender callee) {
         this.orig = orig;
         this.caller = caller;
         this.callee = callee;
     }
 
-    public CommandListenerWrapper getHandle() {
+    public CommandSourceStack getHandle() {
         return orig;
     }
 

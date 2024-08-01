@@ -10,28 +10,28 @@ CraftBukkit: 00fc9fb641cc1c7cf0e6b4f4a88afcbff0cef1b9
  - - [x] Block
  - - [x] Bootstrap
  - - [x] Boss
- - - [ ] Command
+ - - [x] Command
  - - [x] Configuration
- - - [ ] Conversations
+ - - [x] Conversations
  - - [x] Damage
  - - [x] Enchantments
  - - [x] Entity
- - - [ ] Event
- - - [ ] Generator
+ - - [x] Event
+ - - [x] Generator
  - - [x] Help
  - - [ ] Inventory
- - - [ ] Legacy
+ - - [x] Legacy
  - - [x] Map
  - - [x] Metadata
  - - [x] Packs
  - - [x] Persistence
  - - [x] Potion
  - - [x] Profile
- - - [ ] Projectiles
+ - - [x] Projectiles
  - - [x] Scheduler
- - - [ ] Scoreboard
+ - - [x] Scoreboard
  - - [x] Structure
  - - [x] Tag
- - - [ ] Util
- -  CraftBukkit Patches (547 reaming)
- - [ ] Spigot
+ - - [x] Util
+ - [ ] CraftBukkit Patches (547 patches left)
+ - [ ] Spigot Patches (76 patches left)
