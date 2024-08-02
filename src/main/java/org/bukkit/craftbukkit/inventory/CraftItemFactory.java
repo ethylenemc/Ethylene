@@ -3,19 +3,18 @@ package org.bukkit.craftbukkit.inventory;
 import com.google.common.base.Preconditions;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.item.ArgumentParserItemStack;
+import net.minecraft.commands.arguments.item.ItemParser;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.IRegistryCustom;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemMonsterEgg;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentManager;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -149,7 +148,7 @@ public final class CraftItemFactory implements ItemFactory {
     @Override
     public ItemStack createItemStack(String input) throws IllegalArgumentException {
         try {
-            ArgumentParserItemStack.a arg = new ArgumentParserItemStack(MinecraftServer.getDefaultRegistryAccess()).parse(new StringReader(input));
+            ItemParser.ItemResult arg = new ItemParser(MinecraftServer.getDefaultRegistryAccess()).parse(new StringReader(input));
 
             Item item = arg.item().value();
             net.minecraft.world.item.ItemStack nmsItemStack = new net.minecraft.world.item.ItemStack(item);
@@ -170,8 +169,8 @@ public final class CraftItemFactory implements ItemFactory {
         if (type == EntityType.UNKNOWN) {
             return null;
         }
-        EntityTypes<?> nmsType = CraftEntityType.bukkitToMinecraft(type);
-        Item nmsItem = ItemMonsterEgg.byId(nmsType);
+        net.minecraft.world.entity.EntityType<?> nmsType = CraftEntityType.bukkitToMinecraft(type);
+        Item nmsItem = SpawnEggItem.byId(nmsType);
 
         if (nmsItem == null) {
             return null;
@@ -204,8 +203,8 @@ public final class CraftItemFactory implements ItemFactory {
         Preconditions.checkArgument(!itemStack.getType().isAir(), "ItemStack must not be air");
         itemStack = CraftItemStack.asCraftCopy(itemStack);
         CraftItemStack craft = (CraftItemStack) itemStack;
-        IRegistryCustom registry = CraftRegistry.getMinecraftRegistry();
+        RegistryAccess registry = CraftRegistry.getMinecraftRegistry();
         Optional<HolderSet.Named<Enchantment>> optional = (allowTreasures) ? Optional.empty() : registry.registryOrThrow(Registries.ENCHANTMENT).getTag(EnchantmentTags.IN_ENCHANTING_TABLE);
-        return CraftItemStack.asCraftMirror(EnchantmentManager.enchantItem(source, craft.handle, level, registry, optional));
+        return CraftItemStack.asCraftMirror(EnchantmentHelper.enchantItem(source, craft.handle, level, registry, optional));
     }
 }

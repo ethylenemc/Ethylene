@@ -2,7 +2,6 @@ package org.bukkit.craftbukkit.inventory.trim;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.core.Holder;
-import net.minecraft.core.IRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import org.bukkit.NamespacedKey;
@@ -29,9 +28,9 @@ public class CraftTrimPattern implements TrimPattern, Handleable<net.minecraft.w
     public static Holder<net.minecraft.world.item.armortrim.TrimPattern> bukkitToMinecraftHolder(TrimPattern bukkit) {
         Preconditions.checkArgument(bukkit != null);
 
-        IRegistry<net.minecraft.world.item.armortrim.TrimPattern> registry = CraftRegistry.getMinecraftRegistry(Registries.TRIM_PATTERN);
+        net.minecraft.core.Registry<net.minecraft.world.item.armortrim.TrimPattern> registry = CraftRegistry.getMinecraftRegistry(Registries.TRIM_PATTERN);
 
-        if (registry.wrapAsHolder(bukkitToMinecraft(bukkit)) instanceof Holder.c<net.minecraft.world.item.armortrim.TrimPattern> holder) {
+        if (registry.wrapAsHolder(bukkitToMinecraft(bukkit)) instanceof Holder.Direct<net.minecraft.world.item.armortrim.TrimPattern> holder) {
             return holder;
         }
 

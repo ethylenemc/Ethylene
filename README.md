@@ -2,36 +2,6 @@
 CraftBukkit: 00fc9fb641cc1c7cf0e6b4f4a88afcbff0cef1b9
 
  - [x] Bukkit
- - [ ] CraftBukkit
- - - [ ] Base
- - - [x] Advancements
- - - [x] Attribute
- - - [x] Ban
- - - [x] Block
- - - [x] Bootstrap
- - - [x] Boss
- - - [x] Command
- - - [x] Configuration
- - - [x] Conversations
- - - [x] Damage
- - - [x] Enchantments
- - - [x] Entity
- - - [x] Event
- - - [x] Generator
- - - [x] Help
- - - [ ] Inventory
- - - [x] Legacy
- - - [x] Map
- - - [x] Metadata
- - - [x] Packs
- - - [x] Persistence
- - - [x] Potion
- - - [x] Profile
- - - [x] Projectiles
- - - [x] Scheduler
- - - [x] Scoreboard
- - - [x] Structure
- - - [x] Tag
- - - [x] Util
+ - [ ] CraftBukkit Classes (CraftServer and CraftWorld left)
  - [ ] CraftBukkit Patches (547 patches left)
  - [ ] Spigot Patches (76 patches left)

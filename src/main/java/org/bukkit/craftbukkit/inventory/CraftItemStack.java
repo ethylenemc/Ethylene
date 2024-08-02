@@ -6,6 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentManager;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import org.bukkit.Material;
@@ -208,7 +209,7 @@ public final class CraftItemStack extends ItemStack {
         if (list == null) {
             list = ItemEnchantments.EMPTY;
         }
-        ItemEnchantments.a listCopy = new ItemEnchantments.a(list);
+        ItemEnchantments.Mutable listCopy = new ItemEnchantments.Mutable(list);
         listCopy.set(CraftEnchantment.bukkitToMinecraftHolder(ench), level);
         handle.set(DataComponents.ENCHANTMENTS, listCopy.toImmutable());
     }
@@ -232,7 +233,7 @@ public final class CraftItemStack extends ItemStack {
         if (handle == null) {
             return 0;
         }
-        return EnchantmentManager.getItemEnchantmentLevel(CraftEnchantment.bukkitToMinecraftHolder(ench), handle);
+        return EnchantmentHelper.getItemEnchantmentLevel(CraftEnchantment.bukkitToMinecraftHolder(ench), handle);
     }
 
     @Override
@@ -254,7 +255,7 @@ public final class CraftItemStack extends ItemStack {
             return level;
         }
 
-        ItemEnchantments.a listCopy = new ItemEnchantments.a(list);
+        ItemEnchantments.Mutable listCopy = new ItemEnchantments.Mutable(list);
         listCopy.set(CraftEnchantment.bukkitToMinecraftHolder(ench), -1); // Negative to remove
         handle.set(DataComponents.ENCHANTMENTS, listCopy.toImmutable());
 

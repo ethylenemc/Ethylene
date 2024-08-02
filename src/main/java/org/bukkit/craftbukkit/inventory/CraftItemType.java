@@ -6,11 +6,11 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemBlock;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.level.block.BlockComposter;
-import net.minecraft.world.level.block.entity.TileEntityFurnace;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -125,13 +125,13 @@ public class CraftItemType<M extends ItemMeta> implements ItemType.Typed<M>, Han
 
     @Override
     public boolean hasBlockType() {
-        return item instanceof ItemBlock;
+        return item instanceof BlockItem;
     }
 
     @NotNull
     @Override
     public BlockType getBlockType() {
-        if (!(item instanceof ItemBlock block)) {
+        if (!(item instanceof BlockItem block)) {
             throw new IllegalStateException("The item type " + getKey() + " has no corresponding block type");
         }
 
@@ -173,18 +173,18 @@ public class CraftItemType<M extends ItemMeta> implements ItemType.Typed<M>, Han
 
     @Override
     public boolean isFuel() {
-        return TileEntityFurnace.isFuel(new net.minecraft.world.item.ItemStack(item));
+        return FurnaceBlockEntity.isFuel(new net.minecraft.world.item.ItemStack(item));
     }
 
     @Override
     public boolean isCompostable() {
-        return BlockComposter.COMPOSTABLES.containsKey(item);
+        return ComposterBlock.COMPOSTABLES.containsKey(item);
     }
 
     @Override
     public float getCompostChance() {
         Preconditions.checkArgument(isCompostable(), "The item type " + getKey() + " is not compostable");
-        return BlockComposter.COMPOSTABLES.getFloat(item);
+        return ComposterBlock.COMPOSTABLES.getFloat(item);
     }
 
     @Override

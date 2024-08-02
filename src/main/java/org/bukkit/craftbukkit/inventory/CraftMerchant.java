@@ -2,9 +2,8 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import net.minecraft.world.entity.player.EntityHuman;
-import net.minecraft.world.item.trading.IMerchant;
-import net.minecraft.world.item.trading.MerchantRecipeList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.trading.MerchantOffers;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
@@ -14,21 +13,21 @@ import java.util.List;
 
 public class CraftMerchant implements Merchant {
 
-    protected final IMerchant merchant;
+    protected final net.minecraft.world.item.trading.Merchant merchant;
 
-    public CraftMerchant(IMerchant merchant) {
+    public CraftMerchant(net.minecraft.world.item.trading.Merchant merchant) {
         this.merchant = merchant;
     }
 
-    public IMerchant getMerchant() {
+    public net.minecraft.world.item.trading.Merchant getMerchant() {
         return merchant;
     }
 
     @Override
     public List<MerchantRecipe> getRecipes() {
-        return Collections.unmodifiableList(Lists.transform(merchant.getOffers(), new Function<net.minecraft.world.item.trading.MerchantRecipe, MerchantRecipe>() {
+        return Collections.unmodifiableList(Lists.transform(merchant.getOffers(), new Function<net.minecraft.world.item.trading.MerchantOffer, MerchantRecipe>() {
             @Override
-            public MerchantRecipe apply(net.minecraft.world.item.trading.MerchantRecipe recipe) {
+            public MerchantRecipe apply(net.minecraft.world.item.trading.MerchantOffer recipe) {
                 return recipe.asBukkit();
             }
         }));
@@ -36,7 +35,7 @@ public class CraftMerchant implements Merchant {
 
     @Override
     public void setRecipes(List<MerchantRecipe> recipes) {
-        MerchantRecipeList recipesList = merchant.getOffers();
+        MerchantOffers recipesList = merchant.getOffers();
         recipesList.clear();
         for (MerchantRecipe recipe : recipes) {
             recipesList.add(CraftMerchantRecipe.fromBukkit(recipe).toMinecraft());
@@ -65,7 +64,7 @@ public class CraftMerchant implements Merchant {
 
     @Override
     public HumanEntity getTrader() {
-        EntityHuman eh = merchant.getTradingPlayer();
+        Player eh = merchant.getTradingPlayer();
         return eh == null ? null : eh.getBukkitEntity();
     }
 

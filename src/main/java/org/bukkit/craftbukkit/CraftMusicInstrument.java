@@ -2,7 +2,6 @@ package org.bukkit.craftbukkit;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.core.Holder;
-import net.minecraft.core.IRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Instrument;
 import org.bukkit.MusicInstrument;
@@ -28,9 +27,9 @@ public class CraftMusicInstrument extends MusicInstrument implements Handleable<
     public static Holder<Instrument> bukkitToMinecraftHolder(MusicInstrument bukkit) {
         Preconditions.checkArgument(bukkit != null);
 
-        IRegistry<Instrument> registry = CraftRegistry.getMinecraftRegistry(Registries.INSTRUMENT);
+        net.minecraft.core.Registry<Instrument> registry = CraftRegistry.getMinecraftRegistry(Registries.INSTRUMENT);
 
-        if (registry.wrapAsHolder(bukkitToMinecraft(bukkit)) instanceof Holder.c<Instrument> holder) {
+        if (registry.wrapAsHolder(bukkitToMinecraft(bukkit)) instanceof Holder.Direct<Instrument> holder) {
             return holder;
         }
 

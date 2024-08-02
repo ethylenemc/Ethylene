@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.inventory.ContainerEnchantTable;
+import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.bukkit.craftbukkit.CraftRegistry;
 import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
@@ -15,9 +15,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.view.EnchantmentView;
 import org.jetbrains.annotations.NotNull;
 
-public class CraftEnchantmentView extends CraftInventoryView<ContainerEnchantTable> implements EnchantmentView {
+public class CraftEnchantmentView extends CraftInventoryView<EnchantmentMenu> implements EnchantmentView {
 
-    public CraftEnchantmentView(final HumanEntity player, final Inventory viewing, final ContainerEnchantTable container) {
+    public CraftEnchantmentView(final HumanEntity player, final Inventory viewing, final EnchantmentMenu container) {
         super(player, viewing, container);
     }
 

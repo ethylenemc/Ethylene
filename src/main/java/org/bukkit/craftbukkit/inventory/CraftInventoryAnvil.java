@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.world.IInventory;
+import net.minecraft.world.Container;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.inventory.view.CraftAnvilView;
 import org.bukkit.entity.HumanEntity;
@@ -21,7 +21,7 @@ public class CraftInventoryAnvil extends CraftResultInventory implements AnvilIn
     private int repairCostAmount;
     private int maximumRepairCost;
 
-    public CraftInventoryAnvil(Location location, IInventory inventory, IInventory resultInventory) {
+    public CraftInventoryAnvil(Location location, Container inventory, Container resultInventory) {
         super(inventory, resultInventory);
         this.location = location;
         this.renameText = null;

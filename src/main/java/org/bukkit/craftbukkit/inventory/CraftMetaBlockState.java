@@ -7,8 +7,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.*;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.world.item.EnumColor;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.bukkit.DyeColor;
@@ -133,7 +132,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
     }
 
     @Override
-    void serializeInternal(final Map<String, NBTBase> internalTags) {
+    void serializeInternal(final Map<String, Tag> internalTags) {
         if (blockEntityTag != null) {
             internalTags.put(BLOCK_ENTITY_TAG.NBT, blockEntityTag.getSnapshotNBT());
         }
@@ -233,7 +232,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
             if (tag.contains("components", CraftMagicNumbers.NBT.TAG_COMPOUND)) {
                 CompoundTag components = tag.getCompound("components");
                 if (components.contains("minecraft:base_color", CraftMagicNumbers.NBT.TAG_STRING)) {
-                    DyeColor color = DyeColor.getByWoolData((byte) EnumColor.byName(components.getString("minecraft:base_color"), EnumColor.WHITE).getId());
+                    DyeColor color = DyeColor.getByWoolData((byte) net.minecraft.world.item.DyeColor.byName(components.getString("minecraft:base_color"), net.minecraft.world.item.DyeColor.WHITE).getId());
 
                     return CraftMetaShield.shieldToBannerHack(color);
                 }

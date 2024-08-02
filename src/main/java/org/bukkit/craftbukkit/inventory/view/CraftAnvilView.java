@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.inventory.view;
 
-import net.minecraft.world.inventory.ContainerAnvil;
+import net.minecraft.world.inventory.AnvilMenu;
 import org.bukkit.craftbukkit.inventory.CraftInventoryAnvil;
 import org.bukkit.craftbukkit.inventory.CraftInventoryView;
 import org.bukkit.entity.HumanEntity;
@@ -8,9 +8,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.view.AnvilView;
 import org.jetbrains.annotations.Nullable;
 
-public class CraftAnvilView extends CraftInventoryView<ContainerAnvil> implements AnvilView {
+public class CraftAnvilView extends CraftInventoryView<AnvilMenu> implements AnvilView {
 
-    public CraftAnvilView(final HumanEntity player, final Inventory viewing, final ContainerAnvil container) {
+    public CraftAnvilView(final HumanEntity player, final Inventory viewing, final AnvilMenu container) {
         super(player, viewing, container);
     }
 
