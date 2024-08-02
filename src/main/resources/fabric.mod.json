@@ -9,6 +9,7 @@
   "license": "GPL-3.0",
   "icon": "assets/ethylene/icon.png",
   "environment": "server",
+  "accessWidener": "ethylene.accesswidener",
   "entrypoints": {
     "main": [
       "dev.tonimatas.ethylene.Ethylene"
