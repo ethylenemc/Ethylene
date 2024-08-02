@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevelAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -79,7 +80,7 @@ public class CraftBlock implements Block {
 
     @Override
     public World getWorld() {
-        return world.getMinecraftWorld().getWorld();
+        return ((EthyleneLevelAccessor) world).getMinecraftWorld().getWorld(); // Ethylene
     }
 
     public CraftWorld getCraftWorld() {
@@ -198,12 +199,12 @@ public class CraftBlock implements Block {
         } else {
             boolean success = world.setBlock(position, blockData, 2 | 16 | 1024); // NOTIFY | NO_OBSERVER | NO_PLACE (custom)
             if (success && world instanceof net.minecraft.world.level.Level) {
-                world.getMinecraftWorld().sendBlockUpdated(
+                ((EthyleneLevelAccessor) world).getMinecraftWorld().sendBlockUpdated(
                         position,
                         old,
                         blockData,
                         3
-                );
+                ); // Ethylene
             }
             return success;
         }
@@ -216,7 +217,7 @@ public class CraftBlock implements Block {
 
     @Override
     public byte getLightLevel() {
-        return (byte) world.getMinecraftWorld().getMaxLocalRawBrightness(position);
+        return (byte) ((EthyleneLevelAccessor) world).getMinecraftWorld().getMaxLocalRawBrightness(position); // Ethylene
     }
 
     @Override
@@ -341,12 +342,12 @@ public class CraftBlock implements Block {
 
     @Override
     public boolean isBlockPowered() {
-        return world.getMinecraftWorld().getDirectSignalTo(position) > 0;
+        return ((EthyleneLevelAccessor) world).getMinecraftWorld().getDirectSignalTo(position) > 0; // Ethylene
     }
 
     @Override
     public boolean isBlockIndirectlyPowered() {
-        return world.getMinecraftWorld().hasNeighborSignal(position);
+        return ((EthyleneLevelAccessor) world).getMinecraftWorld().hasNeighborSignal(position); // Ethylene
     }
 
     @Override
@@ -368,12 +369,12 @@ public class CraftBlock implements Block {
 
     @Override
     public boolean isBlockFacePowered(BlockFace face) {
-        return world.getMinecraftWorld().hasSignal(position, blockFaceToNotch(face));
+        return ((EthyleneLevelAccessor) world).getMinecraftWorld().hasSignal(position, blockFaceToNotch(face)); // Ethylene
     }
 
     @Override
     public boolean isBlockFaceIndirectlyPowered(BlockFace face) {
-        int power = world.getMinecraftWorld().getSignal(position, blockFaceToNotch(face));
+        int power = ((EthyleneLevelAccessor) world).getMinecraftWorld().getSignal(position, blockFaceToNotch(face)); // Ethylene
 
         Block relative = getRelative(face);
         if (relative.getType() == Material.REDSTONE_WIRE) {
@@ -386,7 +387,7 @@ public class CraftBlock implements Block {
     @Override
     public int getBlockPower(BlockFace face) {
         int power = 0;
-        net.minecraft.world.level.Level world = this.world.getMinecraftWorld();
+        net.minecraft.world.level.Level world = ((EthyleneLevelAccessor) this.world).getMinecraftWorld(); // Ethylene
         int x = getX();
         int y = getY();
         int z = getZ();
@@ -444,7 +445,7 @@ public class CraftBlock implements Block {
 
         // Modelled off EntityHuman#hasBlock
         if (block != Blocks.AIR && (item == null || !iblockdata.requiresCorrectToolForDrops() || nmsItem.isCorrectToolForDrops(iblockdata))) {
-            net.minecraft.world.level.block.Block.dropResources(iblockdata, world.getMinecraftWorld(), position, world.getBlockEntity(position), null, nmsItem);
+            net.minecraft.world.level.block.Block.dropResources(iblockdata, ((EthyleneLevelAccessor) world).getMinecraftWorld(), position, world.getBlockEntity(position), null, nmsItem); // Ethylene
             result = true;
         }
 
@@ -507,7 +508,7 @@ public class CraftBlock implements Block {
 
         // Modelled off EntityHuman#hasBlock
         if (item == null || CraftBlockData.isPreferredTool(iblockdata, nms)) {
-            return net.minecraft.world.level.block.Block.getDrops(iblockdata, (ServerLevel) world.getMinecraftWorld(), position, world.getBlockEntity(position), entity == null ? null : ((CraftEntity) entity).getHandle(), nms)
+            return net.minecraft.world.level.block.Block.getDrops(iblockdata, (ServerLevel) ((EthyleneLevelAccessor) world).getMinecraftWorld(), position, world.getBlockEntity(position), entity == null ? null : ((CraftEntity) entity).getHandle(), nms) // Ethylene
                     .stream().map(CraftItemStack::asBukkitCopy).collect(Collectors.toList());
         } else {
             return Collections.emptyList();
@@ -597,7 +598,7 @@ public class CraftBlock implements Block {
     public boolean canPlace(BlockData data) {
         Preconditions.checkArgument(data != null, "BlockData cannot be null");
         net.minecraft.world.level.block.state.BlockState iblockdata = ((CraftBlockData) data).getState();
-        net.minecraft.world.level.Level world = this.world.getMinecraftWorld();
+        net.minecraft.world.level.Level world = ((EthyleneLevelAccessor) this.world).getMinecraftWorld(); // Ethylene
 
         return iblockdata.canSurvive(world, this.position);
     }

@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevelAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.decoration.HangingEntity;
@@ -72,7 +73,7 @@ public final class CraftEntityTypes {
         }
 
         Level minecraftWorld() {
-            return world().getMinecraftWorld();
+            return ((EthyleneLevelAccessor) world()).getMinecraftWorld(); // Ethylene
         }
     }
 

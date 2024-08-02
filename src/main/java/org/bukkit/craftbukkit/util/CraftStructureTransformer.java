@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.util;
 
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevelAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
@@ -65,7 +66,7 @@ public class CraftStructureTransformer {
     private EntityTransformer[] entityTransformers;
 
     public CraftStructureTransformer(Cause cause, WorldGenLevel generatoraccessseed, StructureManager structuremanager, Structure structure, BoundingBox structureboundingbox, ChunkPos chunkcoordintpair) {
-        AsyncStructureGenerateEvent event = new AsyncStructureGenerateEvent(structuremanager.level.getMinecraftWorld().getWorld(), !Bukkit.isPrimaryThread(), cause, CraftStructure.minecraftToBukkit(structure), new org.bukkit.util.BoundingBox(structureboundingbox.minX(), structureboundingbox.minY(), structureboundingbox.minZ(), structureboundingbox.maxX(), structureboundingbox.maxY(), structureboundingbox.maxZ()), chunkcoordintpair.x, chunkcoordintpair.z);
+        AsyncStructureGenerateEvent event = new AsyncStructureGenerateEvent(((EthyleneLevelAccessor) structuremanager.level).getMinecraftWorld().getWorld(), !Bukkit.isPrimaryThread(), cause, CraftStructure.minecraftToBukkit(structure), new org.bukkit.util.BoundingBox(structureboundingbox.minX(), structureboundingbox.minY(), structureboundingbox.minZ(), structureboundingbox.maxX(), structureboundingbox.maxY(), structureboundingbox.maxZ()), chunkcoordintpair.x, chunkcoordintpair.z); // Ethylene
         Bukkit.getPluginManager().callEvent(event);
         this.blockTransformers = event.getBlockTransformers().values().toArray(BlockTransformer[]::new);
         this.entityTransformers = event.getEntityTransformers().values().toArray(EntityTransformer[]::new);

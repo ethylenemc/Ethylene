@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.generator;
 
 import com.google.common.base.Preconditions;
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevelAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -50,7 +51,7 @@ public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRe
         centerChunkX = center.x;
         centerChunkZ = center.z;
 
-        World world = access.getMinecraftWorld().getWorld();
+        World world = ((EthyleneLevelAccessor) access).getMinecraftWorld().getWorld(); // Ethylene
         int xCenter = centerChunkX << 4;
         int zCenter = centerChunkZ << 4;
         int xMin = xCenter - getBuffer();
@@ -80,7 +81,7 @@ public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRe
             for (int z = -(buffer >> 4); z <= (buffer >> 4); z++) {
                 ProtoChunk chunk = (ProtoChunk) access.getChunk(centerChunkX + x, centerChunkZ + z);
                 for (CompoundTag compound : chunk.getEntities()) {
-                    EntityType.loadEntityRecursive(compound, access.getMinecraftWorld(), (entity) -> {
+                    EntityType.loadEntityRecursive(compound, ((EthyleneLevelAccessor) access).getMinecraftWorld(), (entity) -> { // Ethylene
                         if (region.contains(entity.getX(), entity.getY(), entity.getZ())) {
                             entity.generation = true;
                             entities.add(entity);

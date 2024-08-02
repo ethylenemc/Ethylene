@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.util;
 
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevelAccessor;
 import net.minecraft.core.*;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceKey;
@@ -50,7 +51,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public abstract class DelegatedGeneratorAccess implements WorldGenLevel {
+public abstract class DelegatedGeneratorAccess implements WorldGenLevel, EthyleneLevelAccessor {
 
     private WorldGenLevel handle;
 
@@ -94,7 +95,7 @@ public abstract class DelegatedGeneratorAccess implements WorldGenLevel {
 
     @Override
     public ServerLevel getMinecraftWorld() {
-        return handle.getMinecraftWorld();
+        return ((EthyleneLevelAccessor) handle).getMinecraftWorld(); // Ethylene
     }
 
     @Override
