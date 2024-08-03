@@ -1,4 +1,4 @@
-package dev.tonimatas.ethylene.mixins.minecraft.level;
+package dev.tonimatas.ethylene.mixins.minecraft.world.level;
 
 import dev.tonimatas.ethylene.interfaces.level.EthyleneLevelAccessor;
 import net.minecraft.server.level.ServerLevel;

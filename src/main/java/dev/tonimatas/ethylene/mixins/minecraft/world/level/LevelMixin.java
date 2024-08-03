@@ -1,10 +1,8 @@
-package dev.tonimatas.ethylene.mixins.minecraft.level;
+package dev.tonimatas.ethylene.mixins.minecraft.world.level;
 
 import dev.tonimatas.ethylene.interfaces.level.EthyleneLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -13,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.block.CapturedBlockState;
-import org.bukkit.craftbukkit.util.CraftSpawnCategory;
 import org.bukkit.entity.SpawnCategory;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -74,7 +71,13 @@ public abstract class LevelMixin implements EthyleneLevel {
     }
 
     @Unique public Map<BlockPos, CapturedBlockState> capturedBlockStates = new java.util.LinkedHashMap<>();
-    
+
+    @Override
+    @Unique
+    public Map<BlockPos, CapturedBlockState> ethylene$capturedBlockStates() {
+        return this.capturedBlockStates;
+    }
+
     @Unique public Map<BlockPos, BlockEntity> capturedTileEntities = new HashMap<>();
     
     @Unique public List<ItemEntity> captureDrops;
@@ -82,6 +85,10 @@ public abstract class LevelMixin implements EthyleneLevel {
     @Unique public final it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap<SpawnCategory> ticksPerSpawnCategory = new it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap<>();
     
     @Unique public boolean populating;
+    
+    // Ethylene start
+    
+    // Ethylene end
 
     @Override
     @Unique
@@ -99,6 +106,8 @@ public abstract class LevelMixin implements EthyleneLevel {
     @Unique
     public abstract ResourceKey<LevelStem> getTypeKey();
 
+    
+    
     //protected World(WorldDataMutable worlddatamutable, ResourceKey<Level> resourcekey, RegistryAccess iregistrycustom, Holder<DimensionManager> holder, Supplier<GameProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env) {
     //    this.generator = gen;
     //    this.world = new CraftWorld((ServerLevel) (Object) this, gen, biomeProvider, env);

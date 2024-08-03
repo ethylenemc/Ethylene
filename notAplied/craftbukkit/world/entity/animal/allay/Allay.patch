@@ -21,15 +21,6 @@
      @Override
      protected BehaviorController.b<Allay> brainProvider() {
          return BehaviorController.provider(Allay.MEMORY_TYPES, Allay.SENSOR_TYPES);
-@@ -124,7 +131,7 @@
- 
-     @Override
-     public BehaviorController<Allay> getBrain() {
--        return super.getBrain();
-+        return (BehaviorController<Allay>) super.getBrain(); // CraftBukkit - decompile error
-     }
- 
-     public static AttributeProvider.Builder createAttributes() {
 @@ -225,7 +232,7 @@
      public void aiStep() {
          super.aiStep();
@@ -53,15 +44,6 @@
              this.level().broadcastEntityEvent(this, (byte) 18);
              this.level().playSound(entityhuman, (Entity) this, SoundEffects.AMETHYST_BLOCK_CHIME, SoundCategory.NEUTRAL, 2.0F, 1.0F);
              this.removeInteractionItem(entityhuman, itemstack);
-@@ -306,7 +318,7 @@
-             this.setItemInHand(EnumHand.MAIN_HAND, itemstack2);
-             this.removeInteractionItem(entityhuman, itemstack);
-             this.level().playSound(entityhuman, (Entity) this, SoundEffects.ALLAY_ITEM_GIVEN, SoundCategory.NEUTRAL, 2.0F, 1.0F);
--            this.getBrain().setMemory(MemoryModuleType.LIKED_PLAYER, (Object) entityhuman.getUUID());
-+            this.getBrain().setMemory(MemoryModuleType.LIKED_PLAYER, entityhuman.getUUID()); // CraftBukkit - decompile error
-             return EnumInteractionResult.SUCCESS;
-         } else if (!itemstack1.isEmpty() && enumhand == EnumHand.MAIN_HAND && itemstack.isEmpty()) {
-             this.setItemSlot(EnumItemSlot.MAINHAND, ItemStack.EMPTY);
 @@ -407,6 +419,7 @@
      }
  

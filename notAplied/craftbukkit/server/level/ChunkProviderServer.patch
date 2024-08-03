@@ -26,15 +26,6 @@
                          return ichunkaccess;
                      }
                  }
-@@ -138,7 +148,7 @@
-             Objects.requireNonNull(completablefuture);
-             chunkproviderserver_b.managedBlock(completablefuture::isDone);
-             ChunkResult<IChunkAccess> chunkresult = (ChunkResult) completablefuture.join();
--            IChunkAccess ichunkaccess1 = (IChunkAccess) chunkresult.orElse((Object) null);
-+            IChunkAccess ichunkaccess1 = (IChunkAccess) chunkresult.orElse(null); // CraftBukkit - decompile error
- 
-             if (ichunkaccess1 == null && flag) {
-                 throw (IllegalStateException) SystemUtils.pauseInIde(new IllegalStateException("Chunk not there when requested: " + chunkresult.getError()));
 @@ -218,7 +228,15 @@
          int l = ChunkLevel.byStatus(chunkstatus);
          PlayerChunk playerchunk = this.getVisibleChunkIfPresent(k);

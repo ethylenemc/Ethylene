@@ -570,7 +570,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
         ((EthyleneLevel) world).ethylene$captureBlockStates(false);
         ((EthyleneLevel) world).ethylene$captureTreeGeneration(false);
         if (grownTree) { // Copy block data to delegate
-            for (BlockState blockstate : world.capturedBlockStates.values()) {
+            for (BlockState blockstate : ((EthyleneLevel) world).ethylene$capturedBlockStates().values()) {
                 BlockPos position = ((CraftBlockState) blockstate).getPosition();
                 net.minecraft.world.level.block.state.BlockState oldBlock = world.getBlockState(position);
                 int flag = ((CraftBlockState) blockstate).getFlag();
@@ -578,10 +578,10 @@ public class CraftWorld extends CraftRegionAccessor implements World {
                 net.minecraft.world.level.block.state.BlockState newBlock = world.getBlockState(position);
                 world.notifyAndUpdatePhysics(position, null, oldBlock, newBlock, newBlock, flag, 512);
             }
-            world.capturedBlockStates.clear();
+            ((EthyleneLevel) world).ethylene$capturedBlockStates().clear();
             return true;
         } else {
-            world.capturedBlockStates.clear();
+            ((EthyleneLevel) world).ethylene$capturedBlockStates().clear();
             return false;
         }
     }
@@ -1435,7 +1435,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
         Preconditions.checkArgument(spawnCategory != null, "SpawnCategory cannot be null");
         Preconditions.checkArgument(CraftSpawnCategory.isValidForLimits(spawnCategory), "SpawnCategory.%s are not supported", spawnCategory);
 
-        world.ticksPerSpawnCategory.put(spawnCategory, (long) ticksPerCategorySpawn);
+        ((EthyleneLevel) world).ethylene$ticksPerSpawnCategory().put(spawnCategory, (long) ticksPerCategorySpawn);
     }
 
     @Override
@@ -1443,7 +1443,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
         Preconditions.checkArgument(spawnCategory != null, "SpawnCategory cannot be null");
         Preconditions.checkArgument(CraftSpawnCategory.isValidForLimits(spawnCategory), "SpawnCategory.%s are not supported", spawnCategory);
 
-        return world.ticksPerSpawnCategory.getLong(spawnCategory);
+        return ((EthyleneLevel) world).ethylene$ticksPerSpawnCategory().getLong(spawnCategory);
     }
 
     @Override

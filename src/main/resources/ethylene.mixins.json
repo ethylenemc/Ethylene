@@ -7,11 +7,14 @@
   "mixins": [
     "minecraft.CrashReportMixin",
     "minecraft.advancements.AdvancementHolderMixin",
-    "minecraft.level.ClipContextMixin",
-    "minecraft.level.LevelAccessorMixin",
-    "minecraft.level.LevelMixin",
-    "minecraft.level.redstone.NeighborUpdaterMixin",
-    "minecraft.network.syncher.SynchedEntityDataMixin"
+    "minecraft.network.syncher.SynchedEntityDataMixin",
+    "minecraft.server.commands.LootCommandMixin",
+    "minecraft.stats.StatsCounterMixin",
+    "minecraft.world.inventory.ItemCombinerMenuMixin",
+    "minecraft.world.level.ClipContextMixin",
+    "minecraft.world.level.LevelAccessorMixin",
+    "minecraft.world.level.LevelMixin",
+    "minecraft.world.level.redstone.NeighborUpdaterMixin"
   ],
   "injectors": {
     "defaultRequire": 1

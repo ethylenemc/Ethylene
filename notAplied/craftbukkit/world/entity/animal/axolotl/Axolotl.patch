@@ -36,12 +36,3 @@
          }
  
          entityhuman.removeEffect(MobEffects.DIG_SLOWDOWN);
-@@ -441,7 +448,7 @@
- 
-     @Override
-     public BehaviorController<Axolotl> getBrain() {
--        return super.getBrain();
-+        return (BehaviorController<Axolotl>) super.getBrain(); // CraftBukkit - decompile error
-     }
- 
-     @Override

@@ -466,3 +466,4 @@ accessible field net/minecraft/server/level/ServerChunkCache spawnEnemies Z
 accessible method net/minecraft/world/level/GameRules$Value deserialize (Ljava/lang/String;)V
 accessible method net/minecraft/world/level/GameRules$Value onChanged (Lnet/minecraft/server/MinecraftServer;)V
 accessible field net/minecraft/world/entity/raid/Raids raidMap Ljava/util/Map;
+accessible class net/minecraft/server/commands/LootCommand$Callback

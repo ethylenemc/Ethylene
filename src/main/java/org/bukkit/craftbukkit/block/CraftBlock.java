@@ -466,11 +466,11 @@ public class CraftBlock implements Block {
         InteractionResult result = BoneMealItem.applyBonemeal(context);
         ((EthyleneLevel) world).ethylene$captureTreeGeneration(false);
 
-        if (world.capturedBlockStates.size() > 0) {
+        if (((EthyleneLevel) world).ethylene$capturedBlockStates().size() > 0) {
             TreeType treeType = SaplingBlock.treeType;
             SaplingBlock.treeType = null;
-            List<BlockState> blocks = new ArrayList<>(world.capturedBlockStates.values());
-            world.capturedBlockStates.clear();
+            List<BlockState> blocks = new ArrayList<>(((EthyleneLevel) world).ethylene$capturedBlockStates().values());
+            ((EthyleneLevel) world).ethylene$capturedBlockStates().clear();
             StructureGrowEvent structureEvent = null;
 
             if (treeType != null) {

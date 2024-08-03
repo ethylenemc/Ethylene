@@ -26,7 +26,8 @@ loom {
 }
 
 repositories {
-    maven(url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://nexus.c0d3m4513r.com/repository/Ketting/")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
 }
 
 dependencies {
@@ -34,7 +35,9 @@ dependencies {
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:$loaderVersion")
 
+    // Ethylene
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricApiVersion")
+    implementation("org.kettingpowered:MixinExtras:0.0.1")
     
     // Bukkit and Spigot
     implementation("org.spigotmc:spigot-api:1.21-R0.1-20240729.211617-83")

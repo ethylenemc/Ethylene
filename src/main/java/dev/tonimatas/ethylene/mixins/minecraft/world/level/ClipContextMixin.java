@@ -1,4 +1,4 @@
-package dev.tonimatas.ethylene.mixins.minecraft.level;
+package dev.tonimatas.ethylene.mixins.minecraft.world.level;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ClipContext;

@@ -16,6 +16,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.Lifecycle;
 import dev.tonimatas.ethylene.interfaces.advancements.EthyleneAdvancementHolder;
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevel;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import jline.console.ConsoleReader;
 import net.minecraft.advancements.AdvancementHolder;
@@ -854,9 +855,9 @@ public final class CraftServer implements Server {
                 if (CraftSpawnCategory.isValidForLimits(spawnCategory)) {
                     long ticksPerCategorySpawn = this.getTicksPerSpawns(spawnCategory);
                     if (ticksPerCategorySpawn < 0) {
-                        world.ticksPerSpawnCategory.put(spawnCategory, CraftSpawnCategory.getDefaultTicksPerSpawn(spawnCategory));
+                        ((EthyleneLevel) world).ethylene$ticksPerSpawnCategory().put(spawnCategory, CraftSpawnCategory.getDefaultTicksPerSpawn(spawnCategory));
                     } else {
-                        world.ticksPerSpawnCategory.put(spawnCategory, ticksPerCategorySpawn);
+                        ((EthyleneLevel) world).ethylene$ticksPerSpawnCategory().put(spawnCategory, ticksPerCategorySpawn);
                     }
                 }
             }

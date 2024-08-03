@@ -8,15 +8,6 @@
  
      @Override
      public MapCodec<? extends BlockDispenser> codec() {
-@@ -91,7 +92,7 @@
-     }
- 
-     public void dispenseFrom(WorldServer worldserver, IBlockData iblockdata, BlockPosition blockposition) {
--        TileEntityDispenser tileentitydispenser = (TileEntityDispenser) worldserver.getBlockEntity(blockposition, TileEntityTypes.DISPENSER).orElse((Object) null);
-+        TileEntityDispenser tileentitydispenser = (TileEntityDispenser) worldserver.getBlockEntity(blockposition, TileEntityTypes.DISPENSER).orElse(null); // CraftBukkit - decompile error
- 
-         if (tileentitydispenser == null) {
-             BlockDispenser.LOGGER.warn("Ignoring dispensing attempt for Dispenser without matching block entity at {}", blockposition);
 @@ -107,6 +108,7 @@
                  IDispenseBehavior idispensebehavior = this.getDispenseMethod(worldserver, itemstack);
  

@@ -121,15 +121,6 @@
                  });
  
                  if (i > 10) {
-@@ -363,7 +424,7 @@
- 
-                 executioncontext1.close();
-             } finally {
--                CommandDispatcher.CURRENT_EXECUTION_CONTEXT.set((Object) null);
-+                CommandDispatcher.CURRENT_EXECUTION_CONTEXT.set(null); // CraftBukkit - decompile error
-             }
-         } else {
-             consumer.accept(executioncontext);
 @@ -372,11 +433,36 @@
      }
  
@@ -168,30 +159,3 @@
          entityplayer.connection.send(new PacketPlayOutCommands(rootcommandnode));
      }
  
-@@ -387,7 +473,7 @@
-             CommandNode<CommandListenerWrapper> commandnode2 = (CommandNode) iterator.next();
- 
-             if (commandnode2.canUse(commandlistenerwrapper)) {
--                ArgumentBuilder<ICompletionProvider, ?> argumentbuilder = commandnode2.createBuilder();
-+                ArgumentBuilder argumentbuilder = commandnode2.createBuilder(); // CraftBukkit - decompile error
- 
-                 argumentbuilder.requires((icompletionprovider) -> {
-                     return true;
-@@ -410,7 +496,7 @@
-                     argumentbuilder.redirect((CommandNode) map.get(argumentbuilder.getRedirect()));
-                 }
- 
--                CommandNode<ICompletionProvider> commandnode3 = argumentbuilder.build();
-+                CommandNode commandnode3 = argumentbuilder.build(); // CraftBukkit - decompile error
- 
-                 map.put(commandnode2, commandnode3);
-                 commandnode1.addChild(commandnode3);
-@@ -471,7 +557,7 @@
-             }
- 
-             private <T> HolderLookup.b.a<T> createLookup(final HolderLookup.b<T> holderlookup_b) {
--                return new HolderLookup.b.a<T>(this) {
-+                return new HolderLookup.b.a<T>() { // CraftBukkit - decompile error
-                     @Override
-                     public HolderLookup.b<T> parent() {
-                         return holderlookup_b;

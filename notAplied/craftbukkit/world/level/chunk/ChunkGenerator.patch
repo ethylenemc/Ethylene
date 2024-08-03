@@ -9,15 +9,6 @@
          ChunkCoordIntPair chunkcoordintpair = ichunkaccess.getPos();
  
          if (!SharedConstants.debugVoidTerrain(chunkcoordintpair)) {
-@@ -333,7 +333,7 @@
- 
-                 for (int k = 0; k < j; ++k) {
-                     ChunkSection chunksection = achunksection[k];
--                    PalettedContainerRO palettedcontainerro = chunksection.getBiomes();
-+                    PalettedContainerRO<Holder<BiomeBase>> palettedcontainerro = chunksection.getBiomes(); // CraftBukkit - decompile error
- 
-                     Objects.requireNonNull(set);
-                     palettedcontainerro.getAll(set::add);
 @@ -444,6 +444,33 @@
          }
      }

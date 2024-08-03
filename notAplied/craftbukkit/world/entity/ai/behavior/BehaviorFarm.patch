@@ -12,17 +12,6 @@
  public class BehaviorFarm extends Behavior<EntityVillager> {
  
      private static final int HARVEST_DURATION = 200;
-@@ -82,8 +87,8 @@
- 
-     protected void start(WorldServer worldserver, EntityVillager entityvillager, long i) {
-         if (i > this.nextOkStartTime && this.aboveFarmlandPos != null) {
--            entityvillager.getBrain().setMemory(MemoryModuleType.LOOK_TARGET, (Object) (new BehaviorTarget(this.aboveFarmlandPos)));
--            entityvillager.getBrain().setMemory(MemoryModuleType.WALK_TARGET, (Object) (new MemoryTarget(new BehaviorTarget(this.aboveFarmlandPos), 0.5F, 1)));
-+            entityvillager.getBrain().setMemory(MemoryModuleType.LOOK_TARGET, (new BehaviorTarget(this.aboveFarmlandPos))); // CraftBukkit - decompile error
-+            entityvillager.getBrain().setMemory(MemoryModuleType.WALK_TARGET, (new MemoryTarget(new BehaviorTarget(this.aboveFarmlandPos), 0.5F, 1))); // CraftBukkit - decompile error
-         }
- 
-     }
 @@ -103,7 +108,9 @@
                  Block block1 = worldserver.getBlockState(this.aboveFarmlandPos.below()).getBlock();
  
@@ -45,14 +34,3 @@
                              }
                          }
  
-@@ -142,8 +151,8 @@
-                     this.aboveFarmlandPos = this.getValidFarmland(worldserver);
-                     if (this.aboveFarmlandPos != null) {
-                         this.nextOkStartTime = i + 20L;
--                        entityvillager.getBrain().setMemory(MemoryModuleType.WALK_TARGET, (Object) (new MemoryTarget(new BehaviorTarget(this.aboveFarmlandPos), 0.5F, 1)));
--                        entityvillager.getBrain().setMemory(MemoryModuleType.LOOK_TARGET, (Object) (new BehaviorTarget(this.aboveFarmlandPos)));
-+                        entityvillager.getBrain().setMemory(MemoryModuleType.WALK_TARGET, (new MemoryTarget(new BehaviorTarget(this.aboveFarmlandPos), 0.5F, 1))); // CraftBukkit - decompile error
-+                        entityvillager.getBrain().setMemory(MemoryModuleType.LOOK_TARGET, (new BehaviorTarget(this.aboveFarmlandPos))); // CraftBukkit - decompile error
-                     }
-                 }
-             }

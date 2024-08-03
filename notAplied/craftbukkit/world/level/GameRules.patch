@@ -36,24 +36,6 @@
  
          worldserver.setDefaultSpawnPos(worldserver.getSharedSpawnPos(), worldserver.getSharedSpawnAngle());
      }));
-@@ -150,7 +150,7 @@
-     }
- 
-     public <T extends GameRules.GameRuleValue<T>> T getRule(GameRules.GameRuleKey<T> gamerules_gamerulekey) {
--        return (GameRules.GameRuleValue) this.rules.get(gamerules_gamerulekey);
-+        return (T) this.rules.get(gamerules_gamerulekey); // CraftBukkit - decompile error
-     }
- 
-     public NBTTagCompound createTag() {
-@@ -164,7 +164,7 @@
- 
-     private void loadFromTag(DynamicLike<?> dynamiclike) {
-         this.rules.forEach((gamerules_gamerulekey, gamerules_gamerulevalue) -> {
--            DataResult dataresult = dynamiclike.get(gamerules_gamerulekey.id).asString();
-+            DataResult<String> dataresult = dynamiclike.get(gamerules_gamerulekey.id).asString(); // CraftBukkit - decompile error
- 
-             Objects.requireNonNull(gamerules_gamerulevalue);
-             dataresult.ifSuccess(gamerules_gamerulevalue::deserialize);
 @@ -184,17 +184,17 @@
      }
  
@@ -89,15 +71,6 @@
              this.argument = supplier;
              this.constructor = function;
              this.callback = biconsumer;
-@@ -277,7 +277,7 @@
-         }
- 
-         public T createRule() {
--            return (GameRules.GameRuleValue) this.constructor.apply(this);
-+            return this.constructor.apply(this); // CraftBukkit - decompile error
-         }
- 
-         public void callVisitor(GameRules.GameRuleVisitor gamerules_gamerulevisitor, GameRules.GameRuleKey<T> gamerules_gamerulekey) {
 @@ -297,17 +297,17 @@
  
          public void setFromArgument(CommandContext<CommandListenerWrapper> commandcontext, String s) {
@@ -146,15 +119,6 @@
              this.value = flag;
              this.onChanged(minecraftserver);
          }
-@@ -373,7 +373,7 @@
-         }
- 
-         @Override
--        protected void deserialize(String s) {
-+        public void deserialize(String s) { // PAIL - protected->public
-             this.value = Boolean.parseBoolean(s);
-         }
- 
 @@ -392,7 +392,7 @@
              return new GameRules.GameRuleBoolean(this.type, this.value);
          }
@@ -189,15 +153,6 @@
              this.value = i;
              this.onChanged(minecraftserver);
          }
-@@ -446,7 +446,7 @@
-         }
- 
-         @Override
--        protected void deserialize(String s) {
-+        public void deserialize(String s) { // PAIL - protected->public
-             this.value = safeParse(s);
-         }
- 
 @@ -488,7 +488,7 @@
              return new GameRules.GameRuleInt(this.type, this.value);
          }
