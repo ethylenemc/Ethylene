@@ -73,7 +73,7 @@ public final class CraftEntityTypes {
         }
 
         Level minecraftWorld() {
-            return ((EthyleneLevelAccessor) world()).getMinecraftWorld(); // Ethylene
+            return ((EthyleneLevelAccessor) world()).getMinecraftWorld();
         }
     }
 

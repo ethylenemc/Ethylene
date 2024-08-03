@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit;
 
 import com.google.common.base.Preconditions;
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevel;
 import dev.tonimatas.ethylene.interfaces.level.EthyleneLevelAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -160,7 +161,7 @@ public abstract class CraftRegionAccessor implements RegionAccessor {
     @Override
     public boolean generateTree(Location location, Random random, TreeType treeType) {
         BlockPos pos = CraftLocation.toBlockPosition(location);
-        return generateTree(getHandle(), ((EthyleneLevelAccessor) getHandle()).getMinecraftWorld().getChunkSource().getGenerator(), pos, new RandomSourceWrapper(random), treeType); // Ethylene
+        return generateTree(getHandle(), ((EthyleneLevelAccessor) getHandle()).getMinecraftWorld().getChunkSource().getGenerator(), pos, new RandomSourceWrapper(random), treeType);
     }
 
     @Override
@@ -175,7 +176,7 @@ public abstract class CraftRegionAccessor implements RegionAccessor {
     public boolean generateTree(Location location, Random random, TreeType treeType, Predicate<? super BlockState> predicate) {
         BlockPos pos = CraftLocation.toBlockPosition(location);
         BlockStateListPopulator populator = new BlockStateListPopulator(getHandle());
-        boolean result = generateTree(populator, ((EthyleneLevelAccessor) getHandle()).getMinecraftWorld().getChunkSource().getGenerator(), pos, new RandomSourceWrapper(random), treeType); // Ethylene
+        boolean result = generateTree(populator, ((EthyleneLevelAccessor) getHandle()).getMinecraftWorld().getChunkSource().getGenerator(), pos, new RandomSourceWrapper(random), treeType);
         populator.refreshTiles();
 
         for (BlockState blockState : populator.getList()) {
@@ -484,7 +485,7 @@ public abstract class CraftRegionAccessor implements RegionAccessor {
             }
         }
 
-        if (!entityTypeData.entityType().isEnabledByFeature(((EthyleneLevelAccessor) getHandle()).getMinecraftWorld().getWorld())) { // Ethylene
+        if (!entityTypeData.entityType().isEnabledByFeature(((EthyleneLevel) ((EthyleneLevelAccessor) getHandle()).getMinecraftWorld()).getWorld())) {
             throw new IllegalArgumentException("Cannot spawn an entity for " + clazz.getName() + " because it is not an enabled feature");
         }
 

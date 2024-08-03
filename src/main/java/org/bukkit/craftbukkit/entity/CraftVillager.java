@@ -123,7 +123,7 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
 
     @Override
     public ZombieVillager zombify() {
-        net.minecraft.world.entity.monster.ZombieVillager entityzombievillager = Zombie.zombifyVillager(((EthyleneLevelAccessor) getHandle().level()).getMinecraftWorld(), getHandle(), getHandle().blockPosition(), isSilent(), CreatureSpawnEvent.SpawnReason.CUSTOM); // Ethylene
+        net.minecraft.world.entity.monster.ZombieVillager entityzombievillager = Zombie.zombifyVillager(((EthyleneLevelAccessor) getHandle().level()).getMinecraftWorld(), getHandle(), getHandle().blockPosition(), isSilent(), CreatureSpawnEvent.SpawnReason.CUSTOM);
         return (entityzombievillager != null) ? (ZombieVillager) entityzombievillager.getBukkitEntity() : null;
     }
 

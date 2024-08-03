@@ -18,7 +18,7 @@ import org.bukkit.craftbukkit.block.CraftBlockState;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class BlockStateListPopulator extends DummyGeneratorAccess implements EthyleneLevelAccessor { // Ethylene
+public class BlockStateListPopulator extends DummyGeneratorAccess implements EthyleneLevelAccessor {
     private final LevelAccessor world;
     private final Map<BlockPos, net.minecraft.world.level.block.state.BlockState> dataMap = new HashMap<>();
     private final Map<BlockPos, BlockEntity> entityMap = new HashMap<>();
@@ -79,7 +79,7 @@ public class BlockStateListPopulator extends DummyGeneratorAccess implements Eth
 
     @Override
     public ServerLevel getMinecraftWorld() {
-        return ((EthyleneLevelAccessor) world).getMinecraftWorld(); // Ethylene
+        return ((EthyleneLevelAccessor) world).getMinecraftWorld();
     }
 
     public void refreshTiles() {

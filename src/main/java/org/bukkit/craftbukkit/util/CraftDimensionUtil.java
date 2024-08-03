@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.util;
 
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevel;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.LevelStem;
@@ -10,7 +11,7 @@ public class CraftDimensionUtil {
     }
 
     public static ResourceKey<Level> getMainDimensionKey(Level world) {
-        ResourceKey<LevelStem> typeKey = world.getTypeKey();
+        ResourceKey<LevelStem> typeKey = ((EthyleneLevel) world).getTypeKey();
         if (typeKey == LevelStem.OVERWORLD) {
             return Level.OVERWORLD;
         } else if (typeKey == LevelStem.NETHER) {

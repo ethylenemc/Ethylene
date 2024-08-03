@@ -5,6 +5,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevel;
 import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -563,11 +564,11 @@ public class CraftWorld extends CraftRegionAccessor implements World {
 
     @Override
     public boolean generateTree(Location loc, TreeType type, BlockChangeDelegate delegate) {
-        world.captureTreeGeneration = true;
-        world.captureBlockStates = true;
+        ((EthyleneLevel) world).ethylene$captureTreeGeneration(true);
+        ((EthyleneLevel) world).ethylene$captureBlockStates(true);
         boolean grownTree = generateTree(loc, type);
-        world.captureBlockStates = false;
-        world.captureTreeGeneration = false;
+        ((EthyleneLevel) world).ethylene$captureBlockStates(false);
+        ((EthyleneLevel) world).ethylene$captureTreeGeneration(false);
         if (grownTree) { // Copy block data to delegate
             for (BlockState blockstate : world.capturedBlockStates.values()) {
                 BlockPos position = ((CraftBlockState) blockstate).getPosition();
@@ -1117,12 +1118,12 @@ public class CraftWorld extends CraftRegionAccessor implements World {
 
     @Override
     public boolean getPVP() {
-        return world.pvpMode;
+        return ((EthyleneLevel) world).ethylene$pvpMode();
     }
 
     @Override
     public void setPVP(boolean pvp) {
-        world.pvpMode = pvp;
+        ((EthyleneLevel) world).ethylene$pvpMode(pvp);
     }
 
     public void playEffect(Player player, Effect effect, int data) {

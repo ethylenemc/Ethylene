@@ -9,6 +9,7 @@
     "minecraft.advancements.AdvancementHolderMixin",
     "minecraft.level.ClipContextMixin",
     "minecraft.level.LevelAccessorMixin",
+    "minecraft.level.LevelMixin",
     "minecraft.level.redstone.NeighborUpdaterMixin",
     "minecraft.network.syncher.SynchedEntityDataMixin"
   ],

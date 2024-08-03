@@ -95,7 +95,7 @@ public abstract class DelegatedGeneratorAccess implements WorldGenLevel, Ethylen
 
     @Override
     public ServerLevel getMinecraftWorld() {
-        return ((EthyleneLevelAccessor) handle).getMinecraftWorld(); // Ethylene
+        return ((EthyleneLevelAccessor) handle).getMinecraftWorld();
     }
 
     @Override

@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.mojang.serialization.Codec;
+import dev.tonimatas.ethylene.interfaces.level.EthyleneLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -57,7 +58,7 @@ public class CraftChunk implements Chunk {
     private static final byte[] EMPTY_LIGHT = new byte[2048];
 
     public CraftChunk(net.minecraft.world.level.chunk.LevelChunk chunk) {
-        worldServer = (ServerLevel) chunk.level; // Ethylene
+        worldServer = (ServerLevel) chunk.level;
         x = chunk.getPos().x;
         z = chunk.getPos().z;
     }
@@ -70,7 +71,7 @@ public class CraftChunk implements Chunk {
 
     @Override
     public World getWorld() {
-        return worldServer.getWorld();
+        return ((EthyleneLevel) worldServer).getWorld();
     }
 
     public CraftWorld getCraftWorld() {
@@ -179,7 +180,7 @@ public class CraftChunk implements Chunk {
         BlockState[] entities = new BlockState[chunk.blockEntities.size()];
 
         for (BlockPos position : chunk.blockEntities.keySet()) {
-            entities[index++] = worldServer.getWorld().getBlockAt(position.getX(), position.getY(), position.getZ()).getState();
+            entities[index++] = ((EthyleneLevel) worldServer).getWorld().getBlockAt(position.getX(), position.getY(), position.getZ()).getState();
         }
 
         return entities;
